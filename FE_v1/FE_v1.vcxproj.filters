@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Archivos de origen">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Archivos de encabezado">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Archivos de recursos">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Archivos de origen\Layers">
+      <UniqueIdentifier>{61b46737-b7cc-488f-85aa-ca8f2067b6d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Layers">
+      <UniqueIdentifier>{f64d6da7-6d45-4922-b936-9d83cc19cdf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Actor">
+      <UniqueIdentifier>{5df91992-6960-4762-af99-071ef06328f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Actor">
+      <UniqueIdentifier>{cf024284-e5cd-4206-bf61-31f2da3771d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Actor\Tiles">
+      <UniqueIdentifier>{d16d40c4-e6dd-4470-a08c-5b0468040654}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Actor\Tiles">
+      <UniqueIdentifier>{b5af5245-62d3-4fa6-b1e7-adf49001acaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Actor\Character">
+      <UniqueIdentifier>{2faecf43-c832-4943-92f7-6a3eb98b2e67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Actor\Character">
+      <UniqueIdentifier>{911d6c50-bafa-4020-ab50-19f6cb702f41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\MovementTypes">
+      <UniqueIdentifier>{c8bcf365-9204-4d06-a176-7e9553b1d2c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\WeaponTypes">
+      <UniqueIdentifier>{da77eb5c-db0c-4faa-b97e-bdbdb8c49939}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\MovementTypes">
+      <UniqueIdentifier>{3d917d42-06c8-4cc3-80ea-47c4f99c58c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\WeaponTypes">
+      <UniqueIdentifier>{8de70aa3-70c6-411a-8da2-0a1250061866}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\CharacterClasses">
+      <UniqueIdentifier>{ae635523-276d-430c-96f4-7859762c58b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\CharacterClasses">
+      <UniqueIdentifier>{7945a791-680a-427d-8e8e-a1d57b3c98cb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Game.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Layer.h">
+      <Filter>Archivos de encabezado\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLayer.h">
+      <Filter>Archivos de encabezado\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor.h">
+      <Filter>Archivos de encabezado\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Archivos de encabezado\Actor\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="MapManager.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="GrassTile.h">
+      <Filter>Archivos de encabezado\Actor\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="MountainTile.h">
+      <Filter>Archivos de encabezado\Actor\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="ForestTile.h">
+      <Filter>Archivos de encabezado\Actor\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Archivos de encabezado\Actor\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponType.h">
+      <Filter>Archivos de encabezado\WeaponTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementType.h">
+      <Filter>Archivos de encabezado\MovementTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Infantry.h">
+      <Filter>Archivos de encabezado\MovementTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Sword.h">
+      <Filter>Archivos de encabezado\WeaponTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Princess.h">
+      <Filter>Archivos de encabezado\CharacterClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterClass.h">
+      <Filter>Archivos de encabezado\CharacterClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Game.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Layer.cpp">
+      <Filter>Archivos de origen\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLayer.cpp">
+      <Filter>Archivos de origen\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor.cpp">
+      <Filter>Archivos de origen\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Archivos de origen\Actor\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="MapManager.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="GrassTile.cpp">
+      <Filter>Archivos de origen\Actor\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="MountainTile.cpp">
+      <Filter>Archivos de origen\Actor\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="ForestTile.cpp">
+      <Filter>Archivos de origen\Actor\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Archivos de origen\Actor\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponType.cpp">
+      <Filter>Archivos de origen\WeaponTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementType.cpp">
+      <Filter>Archivos de origen\MovementTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="Infantry.cpp">
+      <Filter>Archivos de origen\MovementTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="Sword.cpp">
+      <Filter>Archivos de origen\WeaponTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="Princess.cpp">
+      <Filter>Archivos de origen\CharacterClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterClass.cpp">
+      <Filter>Archivos de origen\CharacterClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
