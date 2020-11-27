@@ -14,6 +14,7 @@ Character::Character(string name, int hp, int atk, int spd, int def, int res, Ch
 	this->res = res;
 
 	this->currentHP = hp;
+	this->canPlay = true;
 
 	this->aIdle = new Animation("res/" + name + "_idle.png", width, height,
 		120, 40, 8, 3, true, game);
@@ -33,5 +34,8 @@ void Character::update() {
 }
 
 void Character::draw(float scrollX) {
-	animation->draw(x - scrollX, y);
+	if (canPlay)
+		animation->draw(x - scrollX, y);
+	else
+		Actor::draw();
 }

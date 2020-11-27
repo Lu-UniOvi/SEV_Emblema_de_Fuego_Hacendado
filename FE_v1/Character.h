@@ -23,12 +23,12 @@ public:
 	//Stats
 	string name;
 	int hp, atk, spd, def, res;
-	int currentHP;
 
 	//Inventario
 
 	//Variables para el juego
-	bool canPlay = true;
+	bool canPlay;
+	int currentHP;
 
 	//Metodos
 	void update();
