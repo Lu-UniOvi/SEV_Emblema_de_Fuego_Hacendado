@@ -2,14 +2,22 @@
 
 MapManager::MapManager(Game* game) {
 	this->game = game;
-	marco = game->getTexture("res/marco.png");
-	blueSquare = game->getTexture("res/blue.png");
+	this->marco = game->getTexture("res/marco.png");
+	this->blueSquare = game->getTexture("res/blue.png");
+
 	this->pintarRango = false;
+	this->selectedCharacter = nullptr;
 }
 
 void MapManager::init() {
 	tiles.clear();
 	mapa.clear();
+	range.clear();
+	characters.clear();
+	characterPositions.clear();
+
+	this->pintarRango = false;
+	this->selectedCharacter = nullptr;
 }
 
 void MapManager::addTile(Tile* tile) {
@@ -121,6 +129,7 @@ void MapManager::setRange(Character* character) {
 
 	this->range = rango;
 	this->pintarRango = true;
+	this->selectedCharacter = character;
 }
 
 list<vector<int>> MapManager::compruebaIrAdyacentes(int x, int y, int coste, MovementType* mt, list<vector<int>> lista) {
@@ -250,6 +259,11 @@ list<vector<int>> MapManager::addToRange(list<vector<int>> lista, list<vector<in
 	return lista;
 }
 
+void MapManager::deselectRange() {
+	this->pintarRango = false;
+	this->selectedCharacter = nullptr;
+}
+
 vector<int> MapManager::getCharacterPosition(Character* character) {
 	for (auto const& pair : characterPositions) {
 		if (pair.second == character) {
@@ -266,4 +280,25 @@ bool MapManager::isVectorInRange(list<vector<int>> lista, vector<int> v1) {
 			return true;
 	}
 	return false;
+}
+
+bool MapManager::isCharacterInPosition(vector<int> position) {
+	return findClickedCharacter(position) != nullptr;
+}
+
+void MapManager::moveSelectedCharacterTo(vector<int> position) {
+	//Encontrar el character en characterPositions
+	vector<int> originalPos = this->getCharacterPosition(this->selectedCharacter);
+	
+	if (this->findClickedCharacter(originalPos) != nullptr) {
+		//Eliminar esa referencia en characterPositions
+		characterPositions.erase(originalPos);
+		//Añadir nueva pareja vector,character
+		characterPositions[position] = this->selectedCharacter;
+
+		//Actualizar la posicion del character
+		Tile* tile = this->findClickedTile(position);
+		this->selectedCharacter->x = tile->x;
+		this->selectedCharacter->y = tile->y;
+	}
 }

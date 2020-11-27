@@ -29,9 +29,12 @@ public:
 	list<vector<int>> compruebaIrAdyacentes(int x, int y, int coste, MovementType* mt, list<vector<int>> lista);
 	list<vector<int>> compruebaIrAdyacentesAbajo(int x, int y, int coste, MovementType* mt, list<vector<int>> lista);
 	list<vector<int>> addToRange(list<vector<int>> lista, list<vector<int>> lista2);
+	void deselectRange();
 
 	vector<int> getCharacterPosition(Character* character);
 	bool isVectorInRange(list<vector<int>> lista, vector<int> v);
+	bool isCharacterInPosition(vector<int> position);
+	void moveSelectedCharacterTo(vector<int> square);
 
 	Game* game;
 	int numberOfColumns;
@@ -41,6 +44,7 @@ public:
 	vector<vector<Tile*>> mapa; //mapa[columnas][filas]
 	list<vector<int>> range;
 	bool pintarRango = false;
+	Character* selectedCharacter;
 
 	//Characters
 	list<Character*> characters;

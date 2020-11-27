@@ -200,23 +200,46 @@ void GameLayer::manageClickEvent(float motionX, float motionY) {
 	cout << "Clicked Square: " << clickedSquare[0] << ", " << clickedSquare[1] << endl;
 	Tile* tile = mapManager->findClickedTile(clickedSquare);
 	cout << "Tile movementCost: " << tile->movementCost << endl;
-	Character* character = mapManager->findClickedCharacter(clickedSquare);
-	if (character != nullptr) {
-		cout << "Character: " << character->name << endl;
 
-		//Prepara el area al que se puede mover para pintarse
-		mapManager->setRange(character);
+	//Si tiene que pintar el rango es que tiene seleccionado un character
+	if (mapManager->pintarRango) {
+		//comprueba si el tile al que se le ha hecho click está en rango
+		//	y si no hay un personaje en él
+		if (mapManager->isVectorInRange(mapManager->range, clickedSquare)
+				&& !mapManager->isCharacterInPosition(clickedSquare)) { //Esto se tendrá que mirar para el caso de healers
+			cout << "Se hizo click en rango" << endl;
+			//si lo está mueve el personaje hacia ahí
+			mapManager->moveSelectedCharacterTo(clickedSquare);
+			mapManager->selectedCharacter->canPlay = false;
 
-		cout << "MapManager Range" << endl;
-		for (auto const& v : mapManager->range) {
-			cout << "x, y: " << v[0] << ", " << v[1] << endl;
+			//Termina el turno de ese personaje
+			mapManager->deselectRange();
+		}
+		else {
+			cout << "Se hizo click fuera de rango o en una casilla con personaje. Deseleccionadolo." << endl;
+
+			mapManager->deselectRange();
 		}
 	}
 	else {
-		cout << "Character no encontrado." << endl;
-		mapManager->pintarRango = false;
+		Character* character = mapManager->findClickedCharacter(clickedSquare);
+		if (character != nullptr && character->canPlay) {
+			cout << "Character: " << character->name << endl;
 
-		cout << "Map size: " << mapManager->mapa.size() << endl 
-			<< "Map[0] size: " << mapManager->mapa[0].size() << endl;
+			//Prepara el area al que se puede mover para pintarse
+			mapManager->setRange(character);
+
+			cout << "MapManager Range" << endl;
+			for (auto const& v : mapManager->range) {
+				cout << "x, y: " << v[0] << ", " << v[1] << endl;
+			}
+		}
+		else {
+			cout << "Character no encontrado." << endl;
+			mapManager->deselectRange();
+
+			cout << "Map size: " << mapManager->mapa.size() << endl
+				<< "Map[0] size: " << mapManager->mapa[0].size() << endl;
+		}
 	}
 }

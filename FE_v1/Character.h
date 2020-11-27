@@ -27,6 +27,9 @@ public:
 
 	//Inventario
 
+	//Variables para el juego
+	bool canPlay = true;
+
 	//Metodos
 	void update();
 	void draw(float scrollX);
