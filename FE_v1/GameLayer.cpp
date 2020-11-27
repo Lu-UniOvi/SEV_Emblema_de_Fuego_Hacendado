@@ -7,7 +7,7 @@ GameLayer::GameLayer(Game* game) : Layer(game) {
 void GameLayer::init() {
 	mapManager = new MapManager(this->game);
 
-	loadMap("res/mapa_grass.txt");
+	loadMap("res/mapa_0.txt");
 
 	//Cargar Characters
 	loadCharacters("res/characters.csv");

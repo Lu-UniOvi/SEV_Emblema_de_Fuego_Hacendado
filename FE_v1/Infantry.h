@@ -6,5 +6,5 @@
 class Infantry : public MovementType {
 public:
 	Infantry();
-	int costeMovimiento(Tile* tile) override;
+	float costeMovimiento(Tile* tile) override;
 };

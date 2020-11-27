@@ -9,7 +9,7 @@ public:
 
 	//void setCharacter(Character* character);
 
-	int movementCost;
+	float movementCost;
 	bool isWall;
 
 	//Character* character;
