@@ -1,1 +1,10 @@
-﻿  FE_v1.vcxproj -> D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\Debug\FE_v1.exe
+﻿  MapManager.cpp
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\MapManager.cpp(70,44): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\MapManager.cpp(71,26): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\MapManager.cpp(93,13): warning C4244: 'inicializando': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\MapManager.cpp(94,13): warning C4244: 'inicializando': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\MapManager.cpp(145,12): warning C4018: '<': no coinciden signed/unsigned
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\MapManager.cpp(175,12): warning C4018: '<': no coinciden signed/unsigned
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\MapManager.cpp(197,12): warning C4018: '<': no coinciden signed/unsigned
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\MapManager.cpp(212,12): warning C4018: '<': no coinciden signed/unsigned
+  FE_v1.vcxproj -> D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\Debug\FE_v1.exe

@@ -215,5 +215,8 @@ void GameLayer::manageClickEvent(float motionX, float motionY) {
 	else {
 		cout << "Character no encontrado." << endl;
 		mapManager->pintarRango = false;
+
+		cout << "Map size: " << mapManager->mapa.size() << endl 
+			<< "Map[0] size: " << mapManager->mapa[0].size() << endl;
 	}
 }

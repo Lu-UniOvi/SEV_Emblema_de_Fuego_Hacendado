@@ -26,6 +26,11 @@ void MapManager::addCharacter(Character* character, int xpos, int ypos) {
 
 	cout << "CharacterPositions vector: " << positions[0]
 		<< ", " << positions[1] << endl;
+
+	//Tile* t = findClickedTile(positions);
+	//t->setCharacter(character);
+
+	//cout << "Tile->Char " << t->character->name << endl;
 }
 
 void MapManager::draw(float scrollX) {
@@ -111,6 +116,8 @@ void MapManager::setRange(Character* character) {
 	
 	list<vector<int>> rango = compruebaIrAdyacentes(characterPosition[0], 
 		characterPosition[1], 0, character->characterClass->movementType, list<vector<int>>());
+	rango = this->addToRange(rango, compruebaIrAdyacentesAbajo(characterPosition[0],
+		characterPosition[1], 0, character->characterClass->movementType, list<vector<int>>()));
 
 	this->range = rango;
 	this->pintarRango = true;
@@ -121,7 +128,7 @@ list<vector<int>> MapManager::compruebaIrAdyacentes(int x, int y, int coste, Mov
 
 	//Comprueba arriba
 	if (y - 1 >= 0) {
-		Tile* t = mapa[x][y - 1];
+		Tile* t = mapa[y - 1][x];
 		vector<int> v = { x, y - 1 };
 		if (mt->costeMovimiento(t) + coste < mt->movementRange
 			&& !isVectorInRange(lista, v)) {
@@ -135,8 +142,8 @@ list<vector<int>> MapManager::compruebaIrAdyacentes(int x, int y, int coste, Mov
 		}
 	}
 	//Comprueba derecha
-	if (x + 1 < mapa.size()) {
-		Tile* t = mapa[x + 1][y];
+	if (x + 1 < mapa[0].size()) {
+		Tile* t = mapa[y][x + 1];
 		vector<int> v = { x + 1, y };
 		if (mt->costeMovimiento(t) + coste < mt->movementRange
 			&& !isVectorInRange(lista, v)) {
@@ -151,7 +158,7 @@ list<vector<int>> MapManager::compruebaIrAdyacentes(int x, int y, int coste, Mov
 	}
 	//Comprueba izquierda
 	if (x - 1 >= 0) {
-		Tile* t = mapa[x - 1][y];
+		Tile* t = mapa[y][x - 1];
 		vector<int> v = { x - 1, y };
 		if (mt->costeMovimiento(t) + coste < mt->movementRange
 			&& !isVectorInRange(lista, v)) {
@@ -165,8 +172,8 @@ list<vector<int>> MapManager::compruebaIrAdyacentes(int x, int y, int coste, Mov
 		}
 	}
 	//Comprueba abajo
-	if (y + 1 < mapa[0].size()) {
-		Tile* t = mapa[x][y + 1];
+	if (y + 1 < mapa.size()) {
+		Tile* t = mapa[y + 1][x];
 		vector<int> v = { x, y + 1 };
 		if (mt->costeMovimiento(t) + coste < mt->movementRange
 			&& !isVectorInRange(lista, v)) {
@@ -180,6 +187,66 @@ list<vector<int>> MapManager::compruebaIrAdyacentes(int x, int y, int coste, Mov
 		}
 	}
 
+	return lista;
+}
+
+list<vector<int>> MapManager::compruebaIrAdyacentesAbajo(int x, int y, int coste, MovementType* mt, list<vector<int>> lista) {
+	lista.push_back({ x, y });
+
+	//Comprueba abajo
+	if (y + 1 < mapa.size()) {
+		Tile* t = mapa[y + 1][x];
+		vector<int> v = { x, y + 1 };
+		if (mt->costeMovimiento(t) + coste < mt->movementRange
+			&& !isVectorInRange(lista, v)) {
+			cout << "entro abajo" << endl;
+			list<vector<int>> lista2 = compruebaIrAdyacentesAbajo(x, y + 1, mt->costeMovimiento(t) + coste, mt, lista);
+
+			for (auto const& a : lista2) {
+				if (find(lista.begin(), lista.end(), a) == lista.end())
+					lista.push_back(a);
+			}
+		}
+	}
+	//Comprueba derecha
+	if (x + 1 < mapa[0].size()) {
+		Tile* t = mapa[y][x + 1];
+		vector<int> v = { x + 1, y };
+		if (mt->costeMovimiento(t) + coste < mt->movementRange
+			&& !isVectorInRange(lista, v)) {
+			cout << "entro derecha" << endl;
+			list<vector<int>> lista2 = compruebaIrAdyacentesAbajo(x + 1, y, mt->costeMovimiento(t) + coste, mt, lista);
+
+			for (auto const& a : lista2) {
+				if (find(lista.begin(), lista.end(), a) == lista.end())
+					lista.push_back(a);
+			}
+		}
+	}
+	//Comprueba izquierda
+	if (x - 1 >= 0) {
+		Tile* t = mapa[y][x - 1];
+		vector<int> v = { x - 1, y };
+		if (mt->costeMovimiento(t) + coste < mt->movementRange
+			&& !isVectorInRange(lista, v)) {
+			cout << "entro izquierda" << endl;
+			list<vector<int>> lista2 = compruebaIrAdyacentesAbajo(x - 1, y, mt->costeMovimiento(t) + coste, mt, lista);
+
+			for (auto const& a : lista2) {
+				if (find(lista.begin(), lista.end(), a) == lista.end())
+					lista.push_back(a);
+			}
+		}
+	}
+
+	return lista;
+}
+
+list<vector<int>> MapManager::addToRange(list<vector<int>> lista, list<vector<int>> lista2) {
+	for (auto const& a : lista2) {
+		if (find(lista.begin(), lista.end(), a) == lista.end())
+			lista.push_back(a);
+	}
 	return lista;
 }
 

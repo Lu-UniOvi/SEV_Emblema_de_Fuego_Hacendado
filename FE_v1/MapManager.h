@@ -27,6 +27,9 @@ public:
 
 	void setRange(Character* character);
 	list<vector<int>> compruebaIrAdyacentes(int x, int y, int coste, MovementType* mt, list<vector<int>> lista);
+	list<vector<int>> compruebaIrAdyacentesAbajo(int x, int y, int coste, MovementType* mt, list<vector<int>> lista);
+	list<vector<int>> addToRange(list<vector<int>> lista, list<vector<int>> lista2);
+
 	vector<int> getCharacterPosition(Character* character);
 	bool isVectorInRange(list<vector<int>> lista, vector<int> v);
 
@@ -35,7 +38,7 @@ public:
 
 	//Tiles
 	list<Tile*> tiles;
-	vector<vector<Tile*>> mapa;
+	vector<vector<Tile*>> mapa; //mapa[columnas][filas]
 	list<vector<int>> range;
 	bool pintarRango = false;
 
