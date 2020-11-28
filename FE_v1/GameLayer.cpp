@@ -11,8 +11,10 @@ void GameLayer::init() {
 	this->turn = 0;
 
 	//Load HUD
-	this->turnText = new Text("hola", WIDTH * 0.13, HEIGHT * 0.05, game);
-	//this->turnText->content = "Turno: " + to_string(this->turn);
+	this->turnText = new Text("hola", WIDTH * 0.13, HEIGHT * 0.05, false, game);
+	this->buttonWait = new Button("Esperar", HEIGHT * .2, game);
+	this->boolWait = false;
+
 	this->nextTurn();
 
 	loadMap("res/mapa_0.txt");
@@ -65,6 +67,8 @@ void GameLayer::draw() {
 	// HUD
 	//Pintar turno
 	turnText->draw();
+	if (boolWait)
+		buttonWait->draw();
 
 	//Comprobar si se han de pintar los botones
 
@@ -250,43 +254,47 @@ CharacterClass* GameLayer::obtainCharacterClass(char classCode) {
 }
 
 void GameLayer::manageClickEvent(float motionX, float motionY) {
-	//Encuentra el tile en el que se hizo click
-		//y lo devuelve
-	vector<int> clickedSquare = mapManager->findClickedSquare(motionX, motionY);
-	Tile* tile = mapManager->findClickedTile(clickedSquare);
+	//Click en botón
+	if (boolWait && buttonWait->button->containsPoint(motionX, motionY)) {
+		this->moveCharacter(mapManager->selectedSquare);
+		boolWait = false;
+	}
 
-	//Si tiene que pintar el rango es que tiene seleccionado un character
-	if (mapManager->pintarRango) {
-		//comprueba si el tile al que se le ha hecho click está en rango
-		//	y si no hay un personaje en él
-		if (mapManager->isVectorInRange(mapManager->range, clickedSquare)
+	//Click en tile si no se hizo click en botón
+	if (!buttonClicked) {
+		//Encuentra el tile en el que se hizo click
+		//y lo devuelve
+		vector<int> clickedSquare = mapManager->findClickedSquare(motionX, motionY);
+		Tile* tile = mapManager->findClickedTile(clickedSquare);
+
+		//Si tiene que pintar el rango es que tiene seleccionado un character
+		if (mapManager->pintarRango) {
+			//comprueba si el tile al que se le ha hecho click está en rango
+			//	y si no hay un personaje en él
+			if (mapManager->isVectorInRange(mapManager->range, clickedSquare)
 				&& !mapManager->isCharacterInPosition(clickedSquare)) { //Esto se tendrá que mirar para el caso de healers
 
-			Enemy* enemy = mapManager->findClickedEnemy(clickedSquare);
-			if (enemy != nullptr) {
-				map<string, int> result = mapManager->selectedCharacter->checkAttack(enemy);
-				
-				for (auto const& pair : result) {
-					cout << pair.first << ": " << pair.second << endl;
-				}
-			}
+				//Guarda el selectedTile
+				mapManager->selectedSquare = clickedSquare;
 
-			//Pintar un menú
-			//Selecciona opciones que se tienen que pintar
-			//Añadelas a la lista de botones a pintar o pon sus booleanos a true
+				//Pintar un menú
+				//Selecciona opciones que se tienen que pintar
+				//Añadelas a la lista de botones a pintar o pon sus booleanos a true
+				boolWait = true;
+			}
+			else {
+				mapManager->deselectRange();
+			}
 		}
 		else {
-			mapManager->deselectRange();
-		}
-	}
-	else {
-		Character* character = mapManager->findClickedCharacter(clickedSquare);
-		if (character != nullptr && character->canPlay) {
-			//Prepara el area al que se puede mover para pintarse
-			mapManager->setRange(character);
-		}
-		else {
-			mapManager->deselectRange();
+			Character* character = mapManager->findClickedCharacter(clickedSquare);
+			if (character != nullptr && character->canPlay) {
+				//Prepara el area al que se puede mover para pintarse
+				mapManager->setRange(character);
+			}
+			else {
+				mapManager->deselectRange();
+			}
 		}
 	}
 }
@@ -316,4 +324,15 @@ void GameLayer::moveCharacter(vector<int> clickedSquare) {
 
 	//Termina el turno de ese personaje
 	mapManager->deselectRange();
+}
+
+void GameLayer::selectedCharacterAttacksEnemy(vector<int> clickedSquare) {
+	Enemy* enemy = mapManager->findClickedEnemy(clickedSquare);
+	if (enemy != nullptr) {
+		map<string, int> result = mapManager->selectedCharacter->checkAttack(enemy);
+
+		for (auto const& pair : result) {
+			cout << pair.first << ": " << pair.second << endl;
+		}
+	}
 }

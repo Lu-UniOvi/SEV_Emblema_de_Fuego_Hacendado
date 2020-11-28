@@ -7,6 +7,7 @@ MapManager::MapManager(Game* game) {
 
 	this->pintarRango = false;
 	this->selectedCharacter = nullptr;
+	this->selectedSquare = {-1,-1};
 }
 
 void MapManager::init() {
@@ -273,6 +274,7 @@ list<vector<int>> MapManager::addToRange(list<vector<int>> lista, list<vector<in
 void MapManager::deselectRange() {
 	this->pintarRango = false;
 	this->selectedCharacter = nullptr;
+	this->selectedSquare = {-1,-1};
 }
 
 vector<int> MapManager::getCharacterPosition(Character* character) {

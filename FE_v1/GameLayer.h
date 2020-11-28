@@ -15,6 +15,7 @@
 #include "MapManager.h"
 
 #include "Text.h"
+#include "Button.h"
 
 #include <fstream>
 #include <sstream>
@@ -45,6 +46,7 @@ public:
 	void nextTurn();
 	bool isPlayerFase();
 	void moveCharacter(vector<int> clickedSquare);
+	void selectedCharacterAttacksEnemy(vector<int> clickedSquare);
 
 	//Map
 	int mapWidth;
@@ -52,8 +54,11 @@ public:
 
 	//Game control
 	int turn;
+	bool buttonClicked;
 
 	//HUD
 	Text* turnText;
+	Button* buttonWait;
+	bool boolWait;
 };
 

@@ -52,6 +52,7 @@ public:
 	list<vector<int>> range;
 	bool pintarRango = false;
 	Character* selectedCharacter;
+	vector<int> selectedSquare;
 
 	//Characters
 	list<Character*> characters;

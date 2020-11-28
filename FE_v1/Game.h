@@ -26,6 +26,7 @@ public:
 	map<string, SDL_Texture*> mapTextures; // map - cache
 
 	TTF_Font* font;
+	TTF_Font* menuFont;
 
 	SDL_Window* window; // ventana
 	SDL_Renderer* renderer; // renderizador

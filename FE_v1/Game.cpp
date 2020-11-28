@@ -19,6 +19,7 @@ Game::Game() {
 	// fuentes
 	TTF_Init();
 	font = TTF_OpenFont("res/overload.ttf", 28);
+	menuFont = TTF_OpenFont("res/sans.ttf", 22);
 
 	loopActive = true; // bucle activo
 	loop();

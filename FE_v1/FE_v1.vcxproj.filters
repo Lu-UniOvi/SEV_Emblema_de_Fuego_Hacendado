@@ -114,6 +114,9 @@
     <ClInclude Include="Text.h">
       <Filter>Archivos de encabezado\Actor</Filter>
     </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Archivos de encabezado\Actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -174,6 +177,9 @@
       <Filter>Archivos de origen\Actor\Character</Filter>
     </ClCompile>
     <ClCompile Include="Text.cpp">
+      <Filter>Archivos de origen\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
       <Filter>Archivos de origen\Actor</Filter>
     </ClCompile>
   </ItemGroup>

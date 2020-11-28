@@ -2,10 +2,9 @@
 
 #include "Game.h"
 
-class Text
-{
+class Text {
 public:
-	Text(string content, float x, float y, Game* game);
+	Text(string content, float x, float y, bool menuFont, Game* game);
 	void draw();
 	string content; // texto
 	int x;
@@ -13,4 +12,5 @@ public:
 	int width;
 	int height;
 	Game* game; // referencia al juego
+	bool menuFont;
 };
