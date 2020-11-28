@@ -18,14 +18,14 @@ Character::Character(string name, int hp, int atk, int spd, int def, int res, Ch
 
 	this->aIdle = new Animation("res/" + name + "_idle.png", width, height,
 		120, 40, 8, 3, true, game);
-	this->aRunningLeft = new Animation("res/" + name + "_run_left.png", width, height,
+	/*this->aRunningLeft = new Animation("res/" + name + "_run_left.png", width, height,
 		160, 40, 6, 4, true, game);
 	this->aRunningRight = new Animation("res/" + name + "_run_right.png", width, height,
 		160, 40, 6, 4, true, game);
 	this->aRunningUp = new Animation("res/" + name + "_run_up.png", width, height,
 		160, 40, 6, 4, true, game);
 	this->aRunningDown = new Animation("res/" + name + "_run_down.png", width, height,
-		160, 40, 6, 4, true, game);
+		160, 40, 6, 4, true, game);*/
 	this->animation = aIdle;
 }
 

@@ -111,6 +111,9 @@
     <ClInclude Include="Enemy.h">
       <Filter>Archivos de encabezado\Actor\Character</Filter>
     </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>Archivos de encabezado\Actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -169,6 +172,9 @@
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Archivos de origen\Actor\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>Archivos de origen\Actor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

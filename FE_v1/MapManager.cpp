@@ -32,13 +32,17 @@ void MapManager::addCharacter(Character* character, int xpos, int ypos) {
 	vector<int> positions = { xpos, ypos };
 	characterPositions[positions] = character;
 
-	cout << "CharacterPositions vector: " << positions[0]
-		<< ", " << positions[1] << endl;
-
 	//Tile* t = findClickedTile(positions);
 	//t->setCharacter(character);
 
 	//cout << "Tile->Char " << t->character->name << endl;
+}
+
+void MapManager::addEnemy(Enemy* character, int xpos, int ypos) {
+	enemies.push_back(character);
+
+	vector<int> positions = { xpos, ypos };
+	enemyPositions[positions] = character;
 }
 
 void MapManager::draw(float scrollX) {
@@ -59,11 +63,19 @@ void MapManager::draw(float scrollX) {
 	for (auto const& character : characters) {
 		character->draw(scrollX);
 	}
+
+	//Draw Enemies
+	for (auto const& enemy : enemies) {
+		enemy->draw(scrollX);
+	}
 }
 
 void MapManager::update() {
 	for (auto const& character : characters) {
 		character->update();
+	}
+	for (auto const& enemy : enemies) {
+		enemy->update();
 	}
 }
 
@@ -114,7 +126,13 @@ Character* MapManager::findClickedCharacter(vector<int> positions) {
 	if (characterPositions.find(positions) != characterPositions.end()) {
 		return characterPositions[positions];
 	}
+	return nullptr;
+}
 
+Enemy* MapManager::findClickedEnemy(vector<int> positions) {
+	if (enemyPositions.find(positions) != enemyPositions.end()) {
+		return enemyPositions[positions];
+	}
 	return nullptr;
 }
 
@@ -141,7 +159,6 @@ list<vector<int>> MapManager::compruebaIrAdyacentes(int x, int y, int coste, Mov
 		vector<int> v = { x, y - 1 };
 		if (mt->costeMovimiento(t) + coste < mt->movementRange
 			&& !isVectorInRange(lista, v)) {
-			cout << "entro arriba" << endl;
 			list<vector<int>> lista2 = compruebaIrAdyacentes(x, y - 1, mt->costeMovimiento(t) + coste, mt, lista);
 
 			for (auto const& a : lista2) {
@@ -156,7 +173,6 @@ list<vector<int>> MapManager::compruebaIrAdyacentes(int x, int y, int coste, Mov
 		vector<int> v = { x + 1, y };
 		if (mt->costeMovimiento(t) + coste < mt->movementRange
 			&& !isVectorInRange(lista, v)) {
-			cout << "entro derecha" << endl;
 			list<vector<int>> lista2 = compruebaIrAdyacentes(x + 1, y, mt->costeMovimiento(t) + coste, mt, lista);
 
 			for (auto const& a : lista2) {
@@ -171,7 +187,6 @@ list<vector<int>> MapManager::compruebaIrAdyacentes(int x, int y, int coste, Mov
 		vector<int> v = { x - 1, y };
 		if (mt->costeMovimiento(t) + coste < mt->movementRange
 			&& !isVectorInRange(lista, v)) {
-			cout << "entro izquierda" << endl;
 			list<vector<int>> lista2 = compruebaIrAdyacentes(x - 1, y, mt->costeMovimiento(t) + coste, mt, lista);
 
 			for (auto const& a : lista2) {
@@ -186,7 +201,6 @@ list<vector<int>> MapManager::compruebaIrAdyacentes(int x, int y, int coste, Mov
 		vector<int> v = { x, y + 1 };
 		if (mt->costeMovimiento(t) + coste < mt->movementRange
 			&& !isVectorInRange(lista, v)) {
-			cout << "entro abajo" << endl;
 			list<vector<int>> lista2 = compruebaIrAdyacentes(x, y + 1, mt->costeMovimiento(t) + coste, mt, lista);
 
 			for (auto const& a : lista2) {
@@ -208,7 +222,6 @@ list<vector<int>> MapManager::compruebaIrAdyacentesAbajo(int x, int y, int coste
 		vector<int> v = { x, y + 1 };
 		if (mt->costeMovimiento(t) + coste < mt->movementRange
 			&& !isVectorInRange(lista, v)) {
-			cout << "entro abajo" << endl;
 			list<vector<int>> lista2 = compruebaIrAdyacentesAbajo(x, y + 1, mt->costeMovimiento(t) + coste, mt, lista);
 
 			for (auto const& a : lista2) {
@@ -223,7 +236,6 @@ list<vector<int>> MapManager::compruebaIrAdyacentesAbajo(int x, int y, int coste
 		vector<int> v = { x + 1, y };
 		if (mt->costeMovimiento(t) + coste < mt->movementRange
 			&& !isVectorInRange(lista, v)) {
-			cout << "entro derecha" << endl;
 			list<vector<int>> lista2 = compruebaIrAdyacentesAbajo(x + 1, y, mt->costeMovimiento(t) + coste, mt, lista);
 
 			for (auto const& a : lista2) {
@@ -238,7 +250,6 @@ list<vector<int>> MapManager::compruebaIrAdyacentesAbajo(int x, int y, int coste
 		vector<int> v = { x - 1, y };
 		if (mt->costeMovimiento(t) + coste < mt->movementRange
 			&& !isVectorInRange(lista, v)) {
-			cout << "entro izquierda" << endl;
 			list<vector<int>> lista2 = compruebaIrAdyacentesAbajo(x - 1, y, mt->costeMovimiento(t) + coste, mt, lista);
 
 			for (auto const& a : lista2) {
@@ -270,7 +281,15 @@ vector<int> MapManager::getCharacterPosition(Character* character) {
 			return pair.first;
 		}
 	}
+	return vector<int>();
+}
 
+vector<int> MapManager::getEnemyPosition(Enemy* character) {
+	for (auto const& pair : enemyPositions) {
+		if (pair.second == character) {
+			return pair.first;
+		}
+	}
 	return vector<int>();
 }
 
@@ -301,4 +320,24 @@ void MapManager::moveSelectedCharacterTo(vector<int> position) {
 		this->selectedCharacter->x = tile->x;
 		this->selectedCharacter->y = tile->y;
 	}
+}
+
+bool MapManager::isEnemyInPosition(vector<int> position) {
+	return findClickedEnemy(position) != nullptr;
+}
+
+bool MapManager::noUnitsNextToPlay(bool playerFase) {
+	if (playerFase) {
+		for (auto const& c : characters) {
+			if (c->canPlay)
+				return false;
+		}
+	}
+	else {
+		for (auto const& c : enemies) {
+			if (c->canPlay)
+				return false;
+		}
+	}
+	return true;
 }

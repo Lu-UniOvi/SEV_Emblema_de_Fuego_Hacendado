@@ -6,11 +6,20 @@ GameLayer::GameLayer(Game* game) : Layer(game) {
 
 void GameLayer::init() {
 	mapManager = new MapManager(this->game);
+	
+	//Game stuff
+	this->turn = 0;
+
+	//Load HUD
+	this->turnText = new Text("hola", WIDTH * 0.13, HEIGHT * 0.05, game);
+	//this->turnText->content = "Turno: " + to_string(this->turn);
+	this->nextTurn();
 
 	loadMap("res/mapa_0.txt");
 
 	//Cargar Characters
-	loadCharacters("res/characters.csv");
+	loadCharacters("res/characters.csv", true);
+	loadCharacters("res/enemies.csv", false);
 }
 
 void GameLayer::processControls() {
@@ -28,7 +37,7 @@ void GameLayer::processControls() {
 }
 
 void GameLayer::keysToControls(SDL_Event event) {
-
+	//si meto scroll se haría con WASD
 }
 
 void GameLayer::mouseToControls(SDL_Event event) {
@@ -44,10 +53,20 @@ void GameLayer::mouseToControls(SDL_Event event) {
 
 void GameLayer::update() {
 	mapManager->update();
+
+	if (mapManager->noUnitsNextToPlay(isPlayerFase())) {
+		this->nextTurn();
+	}
 }
 
 void GameLayer::draw() {
 	mapManager->draw();
+
+	// HUD
+	//Pintar turno
+	turnText->draw();
+
+	//Comprobar si se han de pintar los botones
 
 	SDL_RenderPresent(game->renderer); // Renderiza
 }
@@ -112,7 +131,7 @@ void GameLayer::loadMapObject(char character, float x, float y) {
 	}
 }
 
-void GameLayer::loadCharacters(string name) {
+void GameLayer::loadCharacters(string name, bool characterList) {
 	string line;
 	ifstream streamFile(name.c_str());
 	if (!streamFile.is_open()) {
@@ -142,7 +161,12 @@ void GameLayer::loadCharacters(string name) {
 			//Añadir el último elemento
 			data.push_back(line);
 
-			loadCharacterObject(data);
+			if (characterList) {
+				loadCharacterObject(data);
+			}
+			else {
+				loadEnemyObject(data);
+			}
 		}//while file
 	}//else
 }
@@ -179,6 +203,38 @@ void GameLayer::loadCharacterObject(vector<string> data) {
 	mapManager->addCharacter(character, casilla_x, casilla_y);
 }
 
+void GameLayer::loadEnemyObject(vector<string> data) {
+	//Pasar los datos del vector a variables
+	string name = "enemy_" + data[0];
+	char classCode = data[1].c_str()[0];
+	int casilla_x = stoi(data[2]);
+	int casilla_y = stoi(data[3]);
+	int hp = stoi(data[4]);
+	int atk = stoi(data[5]);
+	int spd = stoi(data[6]);
+	int def = stoi(data[7]);
+	int res = stoi(data[8]);
+
+	//Creación del objeto
+	//	Obtener la clase del objeto
+	CharacterClass* characterClass = this->obtainCharacterClass(classCode);
+
+	//	Transformar casillas a posiciones x, y
+	//	(los tiles son de 40x40)
+		//posicion de la esquina superior izquierda
+	float x = casilla_x * 40;
+	float y = casilla_y * 40;
+	//pasar de esquina a centro para el Actor
+	x = x + 20;
+	y = y + 20;
+
+	Enemy* character = new Enemy(name, hp, atk, spd, def, res, characterClass,
+		x, y, 40, 40, this->game);
+
+	//Añadir el objeto al mapa
+	mapManager->addEnemy(character, casilla_x, casilla_y);
+}
+
 CharacterClass* GameLayer::obtainCharacterClass(char classCode) {
 	CharacterClass* charClass = nullptr;
 	switch (classCode) {
@@ -197,9 +253,7 @@ void GameLayer::manageClickEvent(float motionX, float motionY) {
 	//Encuentra el tile en el que se hizo click
 		//y lo devuelve
 	vector<int> clickedSquare = mapManager->findClickedSquare(motionX, motionY);
-	cout << "Clicked Square: " << clickedSquare[0] << ", " << clickedSquare[1] << endl;
 	Tile* tile = mapManager->findClickedTile(clickedSquare);
-	cout << "Tile movementCost: " << tile->movementCost << endl;
 
 	//Si tiene que pintar el rango es que tiene seleccionado un character
 	if (mapManager->pintarRango) {
@@ -207,7 +261,6 @@ void GameLayer::manageClickEvent(float motionX, float motionY) {
 		//	y si no hay un personaje en él
 		if (mapManager->isVectorInRange(mapManager->range, clickedSquare)
 				&& !mapManager->isCharacterInPosition(clickedSquare)) { //Esto se tendrá que mirar para el caso de healers
-			cout << "Se hizo click en rango" << endl;
 			//si lo está mueve el personaje hacia ahí
 			mapManager->moveSelectedCharacterTo(clickedSquare);
 			mapManager->selectedCharacter->canPlay = false;
@@ -216,30 +269,37 @@ void GameLayer::manageClickEvent(float motionX, float motionY) {
 			mapManager->deselectRange();
 		}
 		else {
-			cout << "Se hizo click fuera de rango o en una casilla con personaje. Deseleccionadolo." << endl;
-
 			mapManager->deselectRange();
 		}
 	}
 	else {
 		Character* character = mapManager->findClickedCharacter(clickedSquare);
 		if (character != nullptr && character->canPlay) {
-			cout << "Character: " << character->name << endl;
-
 			//Prepara el area al que se puede mover para pintarse
 			mapManager->setRange(character);
 
-			cout << "MapManager Range" << endl;
-			for (auto const& v : mapManager->range) {
-				cout << "x, y: " << v[0] << ", " << v[1] << endl;
-			}
+			//Pintar un menú
+			//Selecciona opciones que se tienen que pintar
+			//Añadelas a la lista de botones a pintar o pon sus booleanos a true
 		}
 		else {
-			cout << "Character no encontrado." << endl;
 			mapManager->deselectRange();
-
-			cout << "Map size: " << mapManager->mapa.size() << endl
-				<< "Map[0] size: " << mapManager->mapa[0].size() << endl;
 		}
 	}
+}
+
+void GameLayer::nextTurn() {
+	this->turn++;
+	this->turnText->content = "Turno: " + to_string(this->turn);
+
+	for (auto const& c : mapManager->characters) {
+		c->canPlay = isPlayerFase();
+	}
+	for (auto const& c : mapManager->enemies) {
+		c->canPlay = !isPlayerFase();
+	}
+}
+
+bool GameLayer::isPlayerFase() {
+	return turn % 2 == 1;
 }
