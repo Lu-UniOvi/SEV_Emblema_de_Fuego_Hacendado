@@ -44,6 +44,7 @@ public:
 
 	void nextTurn();
 	bool isPlayerFase();
+	void moveCharacter(vector<int> clickedSquare);
 
 	//Map
 	int mapWidth;

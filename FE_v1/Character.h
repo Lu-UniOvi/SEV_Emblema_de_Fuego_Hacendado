@@ -33,4 +33,7 @@ public:
 	//Metodos
 	void update();
 	void draw(float scrollX);
+	virtual bool isAlly();
+	map<string, int> checkAttack(Character* target); //this inicia el ataque
+	int calculateDamage(Character* target);
 };

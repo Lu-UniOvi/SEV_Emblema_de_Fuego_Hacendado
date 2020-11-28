@@ -2,5 +2,5 @@
 
 Sword::Sword()
 	: WeaponType() {
-
+	this->physicalAttack = true;
 }

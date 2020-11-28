@@ -39,3 +39,73 @@ void Character::draw(float scrollX) {
 	else
 		Actor::draw();
 }
+
+bool Character::isAlly() {
+	return true;
+}
+
+map<string, int> Character::checkAttack(Character* target) {
+	int damageDealt = 0;
+	int damageTaken = 0;
+
+	map<string, int> result;
+	result["damageDealt"] = damageDealt;
+	result["damageTaken"] = damageTaken;
+
+	//this ataca primero
+	damageDealt = this->calculateDamage(target);
+	result["damageDealt"] = damageDealt;
+
+	//Comprueba si el target se murio
+	if (target->currentHP <= damageDealt) {
+		return result;
+	}
+
+	//target ataca si puede
+	if (true) { //se comprobaría el rango del ataque
+		damageTaken = target->calculateDamage(this);
+		result["damageTaken"] = damageTaken;
+	}
+
+	//Comprueba si this se murio
+	if (this->currentHP <= damageTaken) {
+		return result;
+	}
+
+	//Se comprueba si this hace doble
+	if (this->spd - target->spd >= 5) {
+		//hace doble y vuelve a atacar
+		damageDealt += this->calculateDamage(target);
+		result["damageDealt"] = damageDealt;
+	}
+
+	//Comprueba si el target se murio
+	if (target->currentHP <= damageDealt) {
+		return result;
+	}
+
+	//Se comprueba si target hace doble
+	if (target->spd - this->spd >= 5) {
+		//hace doble y vuelve a atacar
+		damageTaken += target->calculateDamage(this);
+		result["damageTaken"] = damageTaken;
+	}
+
+	//Comprueba si el target se murio
+	if (this->currentHP <= damageTaken) {
+		return result;
+	}
+
+	return result;
+}
+
+int Character::calculateDamage(Character* target) {
+	if (this->characterClass->weaponType->physicalAttack) {
+		//Ataca por defensa
+		return this->atk - target->def; //Le debería sumar el ataque del arma
+	}
+	else {
+		//Ataca por resistencia
+		return this->atk - target->res; //Le debería sumar el ataque del arma
+	}
+}

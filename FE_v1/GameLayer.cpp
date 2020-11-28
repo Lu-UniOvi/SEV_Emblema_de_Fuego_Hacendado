@@ -261,12 +261,19 @@ void GameLayer::manageClickEvent(float motionX, float motionY) {
 		//	y si no hay un personaje en él
 		if (mapManager->isVectorInRange(mapManager->range, clickedSquare)
 				&& !mapManager->isCharacterInPosition(clickedSquare)) { //Esto se tendrá que mirar para el caso de healers
-			//si lo está mueve el personaje hacia ahí
-			mapManager->moveSelectedCharacterTo(clickedSquare);
-			mapManager->selectedCharacter->canPlay = false;
 
-			//Termina el turno de ese personaje
-			mapManager->deselectRange();
+			Enemy* enemy = mapManager->findClickedEnemy(clickedSquare);
+			if (enemy != nullptr) {
+				map<string, int> result = mapManager->selectedCharacter->checkAttack(enemy);
+				
+				for (auto const& pair : result) {
+					cout << pair.first << ": " << pair.second << endl;
+				}
+			}
+
+			//Pintar un menú
+			//Selecciona opciones que se tienen que pintar
+			//Añadelas a la lista de botones a pintar o pon sus booleanos a true
 		}
 		else {
 			mapManager->deselectRange();
@@ -277,10 +284,6 @@ void GameLayer::manageClickEvent(float motionX, float motionY) {
 		if (character != nullptr && character->canPlay) {
 			//Prepara el area al que se puede mover para pintarse
 			mapManager->setRange(character);
-
-			//Pintar un menú
-			//Selecciona opciones que se tienen que pintar
-			//Añadelas a la lista de botones a pintar o pon sus booleanos a true
 		}
 		else {
 			mapManager->deselectRange();
@@ -291,15 +294,26 @@ void GameLayer::manageClickEvent(float motionX, float motionY) {
 void GameLayer::nextTurn() {
 	this->turn++;
 	this->turnText->content = "Turno: " + to_string(this->turn);
+	bool b = isPlayerFase();
 
 	for (auto const& c : mapManager->characters) {
-		c->canPlay = isPlayerFase();
+		c->canPlay = b;
 	}
 	for (auto const& c : mapManager->enemies) {
-		c->canPlay = !isPlayerFase();
+		c->canPlay = !b;
 	}
 }
 
 bool GameLayer::isPlayerFase() {
 	return turn % 2 == 1;
+}
+
+void GameLayer::moveCharacter(vector<int> clickedSquare) {
+	//Mueve el personaje a una casilla
+	//Este método se llamará desde las opciones Esperar, Atacar y Curar
+	mapManager->moveSelectedCharacterTo(clickedSquare);
+	mapManager->selectedCharacter->canPlay = false;
+
+	//Termina el turno de ese personaje
+	mapManager->deselectRange();
 }

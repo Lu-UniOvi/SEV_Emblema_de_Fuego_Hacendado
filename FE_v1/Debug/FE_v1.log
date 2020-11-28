@@ -1,4 +1,10 @@
-﻿  GameLayer.cpp
+﻿  Character.cpp
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\Character.cpp(19,66): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\Character.cpp(19,59): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+  CharacterClass.cpp
+  Enemy.cpp
+  Game.cpp
+  GameLayer.cpp
 D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\GameLayer.cpp(14,70): warning C4305: 'argumento': truncamiento de 'double' a 'float'
 D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\GameLayer.cpp(45,16): warning C4244: 'inicializando': conversión de 'Sint32' a 'float'; posible pérdida de datos
 D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\GameLayer.cpp(46,16): warning C4244: 'inicializando': conversión de 'Sint32' a 'float'; posible pérdida de datos
@@ -24,5 +30,8 @@ D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ 
 D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\MapManager.cpp(234,12): warning C4018: '<': no coinciden signed/unsigned
 D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\MapManager.cpp(239,91): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
 D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\MapManager.cpp(253,91): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+  Princess.cpp
+  Sword.cpp
+  WeaponType.cpp
   Generando código...
   FE_v1.vcxproj -> D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\Debug\FE_v1.exe

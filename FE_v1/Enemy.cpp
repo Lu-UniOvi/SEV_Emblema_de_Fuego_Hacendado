@@ -5,3 +5,7 @@ Enemy::Enemy(string name, int hp, int atk, int spd, int def, int res, CharacterC
 	: Character(name, hp, atk, spd, def, res, characterClass, x, y, width, height, game) {
 
 }
+
+bool Enemy::isAlly() {
+	return false;
+}
