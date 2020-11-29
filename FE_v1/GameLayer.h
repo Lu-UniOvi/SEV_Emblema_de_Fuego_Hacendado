@@ -16,6 +16,8 @@
 
 #include "Text.h"
 #include "Button.h"
+//#include "ButtonManager.h"
+#include "ButtonManagerParent.h"
 
 #include <fstream>
 #include <sstream>
@@ -58,7 +60,6 @@ public:
 
 	//HUD
 	Text* turnText;
-	Button* buttonWait;
-	bool boolWait;
+	bool paintMenu;
+	ButtonManagerParent* buttonManager;
 };
-

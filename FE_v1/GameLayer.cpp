@@ -1,4 +1,5 @@
 #include "GameLayer.h"
+#include "ButtonManager.h"
 
 GameLayer::GameLayer(Game* game) : Layer(game) {
 	init();
@@ -6,14 +7,14 @@ GameLayer::GameLayer(Game* game) : Layer(game) {
 
 void GameLayer::init() {
 	mapManager = new MapManager(this->game);
+	buttonManager = new ButtonManager(this, this->game);
 	
 	//Game stuff
 	this->turn = 0;
+	this->paintMenu = false;
 
 	//Load HUD
 	this->turnText = new Text("hola", WIDTH * 0.13, HEIGHT * 0.05, false, game);
-	this->buttonWait = new Button("Esperar", HEIGHT * .2, game);
-	this->boolWait = false;
 
 	this->nextTurn();
 
@@ -65,12 +66,10 @@ void GameLayer::draw() {
 	mapManager->draw();
 
 	// HUD
-	//Pintar turno
 	turnText->draw();
-	if (boolWait)
-		buttonWait->draw();
-
-	//Comprobar si se han de pintar los botones
+	
+	if (paintMenu)
+		buttonManager->draw();
 
 	SDL_RenderPresent(game->renderer); // Renderiza
 }
@@ -106,7 +105,7 @@ void GameLayer::loadMap(string name) {
 	streamFile.close();
 
 	//cout << "mapManager size: " << mapManager->tiles.size() << endl;
-	cout << mapManager->numberOfColumns << endl;
+	//cout << mapManager->numberOfColumns << endl;
 }
 
 void GameLayer::loadMapObject(char character, float x, float y) {
@@ -243,7 +242,7 @@ CharacterClass* GameLayer::obtainCharacterClass(char classCode) {
 	CharacterClass* charClass = nullptr;
 	switch (classCode) {
 	case 'p': {
-		cout << "Princess" << endl;
+		//cout << "Princess" << endl;
 		charClass = new Princess();
 		break;
 	}
@@ -255,10 +254,7 @@ CharacterClass* GameLayer::obtainCharacterClass(char classCode) {
 
 void GameLayer::manageClickEvent(float motionX, float motionY) {
 	//Click en botón
-	if (boolWait && buttonWait->button->containsPoint(motionX, motionY)) {
-		this->moveCharacter(mapManager->selectedSquare);
-		boolWait = false;
-	}
+	this->buttonClicked = paintMenu ? buttonManager->click(motionX, motionY) : false;
 
 	//Click en tile si no se hizo click en botón
 	if (!buttonClicked) {
@@ -280,7 +276,8 @@ void GameLayer::manageClickEvent(float motionX, float motionY) {
 				//Pintar un menú
 				//Selecciona opciones que se tienen que pintar
 				//Añadelas a la lista de botones a pintar o pon sus booleanos a true
-				boolWait = true;
+				this->paintMenu = true;
+				buttonManager->boolWait = true;
 			}
 			else {
 				mapManager->deselectRange();
@@ -296,6 +293,10 @@ void GameLayer::manageClickEvent(float motionX, float motionY) {
 				mapManager->deselectRange();
 			}
 		}
+	}
+	else {
+		//Se hizo click en un botón así que no debería pintarlos
+		buttonManager->unselectButtonPaint();
 	}
 }
 
