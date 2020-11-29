@@ -9,13 +9,21 @@ ButtonManager::ButtonManager(GameLayer* gl, Game* game)
 }
 
 void ButtonManager::init() {
-	this->buttonWait = new Button("Esperar", HEIGHT * .2, game);
+	initHeight();
+
+	this->buttonWait = new Button("Esperar", HEIGHT * this->multiplier, game);
 	this->boolWait = false;
+	incHeight();
+	this->buttonWait2 = new Button("Esperar", HEIGHT * this->multiplier, game);
+	this->boolWait2 = false;
+	incHeight();
 }
 
 void ButtonManager::draw() {
 	if (boolWait)
 		buttonWait->draw();
+	if (boolWait2)
+		buttonWait2->draw();
 }
 
 bool ButtonManager::click(float motionX, float motionY) {
@@ -32,4 +40,13 @@ bool ButtonManager::click(float motionX, float motionY) {
 
 void ButtonManager::unselectButtonPaint() {
 	boolWait = false;
+	boolWait2 = false;
+}
+
+void ButtonManager::initHeight() {
+	this->multiplier = .2;
+}
+
+void ButtonManager::incHeight() {
+	this->multiplier += .1;
 }

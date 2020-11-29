@@ -278,6 +278,7 @@ void GameLayer::manageClickEvent(float motionX, float motionY) {
 				//Añadelas a la lista de botones a pintar o pon sus booleanos a true
 				this->paintMenu = true;
 				buttonManager->boolWait = true;
+				buttonManager->boolWait2 = true;
 			}
 			else {
 				mapManager->deselectRange();
