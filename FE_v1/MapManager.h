@@ -43,6 +43,8 @@ public:
 
 	bool noUnitsNextToPlay(bool playerFase);
 
+	bool enemyInAttackRange();
+
 	Game* game;
 	int numberOfColumns;
 

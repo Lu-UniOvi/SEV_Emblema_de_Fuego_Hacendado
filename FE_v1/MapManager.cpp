@@ -343,3 +343,31 @@ bool MapManager::noUnitsNextToPlay(bool playerFase) {
 	}
 	return true;
 }
+
+bool MapManager::enemyInAttackRange() {
+	vector<int> no = { -1,-1 };
+	bool isEnemy = false;
+	if (selectedCharacter != nullptr && selectedSquare != no) {
+		//CloseRange
+		if (selectedCharacter->characterClass->weaponType->closeRange) {
+			//Comprueba casillas adyacentes
+			vector<int> top = selectedSquare;
+			top[1] = selectedSquare[1] - 1;
+			vector<int> bottom = selectedSquare;
+			bottom[0] = selectedSquare[1] + 1;
+			vector<int> left = selectedSquare;
+			left[0] = selectedSquare[0] - 1;
+			vector<int> right = selectedSquare;
+			right[0] = selectedSquare[0] + 1;
+			if (isEnemyInPosition(top) || isEnemyInPosition(bottom) 
+				|| isEnemyInPosition(left) || isEnemyInPosition(right))
+				isEnemy = true;
+		}
+		//LongRange
+		if (selectedCharacter->characterClass->weaponType->longRange) {
+			//Comprueba casillas a una casilla de distancia, contando diagonales
+		}
+	}
+
+	return isEnemy;
+}

@@ -274,14 +274,20 @@ void GameLayer::manageClickEvent(float motionX, float motionY) {
 				mapManager->selectedSquare = clickedSquare;
 
 				//Pintar un menú
-				//Selecciona opciones que se tienen que pintar
-				//Añadelas a la lista de botones a pintar o pon sus booleanos a true
 				this->paintMenu = true;
+				//Selecciona opciones que se tienen que pintar
+				//Esperar siempre debe estar activo
 				buttonManager->boolWait = true;
 				buttonManager->boolWait2 = true;
+				//Si tiene un enemigo en rango añade opción atacar
+				if (mapManager->enemyInAttackRange()) {
+					//buttonManager->boolAttack = true;
+					cout << "enemy in attack range" << endl;
+				}
 			}
 			else {
 				mapManager->deselectRange();
+				buttonManager->unselectButtonPaint();
 			}
 		}
 		else {
@@ -292,6 +298,7 @@ void GameLayer::manageClickEvent(float motionX, float motionY) {
 			}
 			else {
 				mapManager->deselectRange();
+				buttonManager->unselectButtonPaint();
 			}
 		}
 	}

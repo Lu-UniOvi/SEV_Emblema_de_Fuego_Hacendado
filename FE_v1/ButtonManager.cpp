@@ -20,10 +20,19 @@ void ButtonManager::init() {
 }
 
 void ButtonManager::draw() {
-	if (boolWait)
-		buttonWait->draw();
-	if (boolWait2)
+	initHeight();
+	if (boolWait2) {
+		buttonWait2->button->y = HEIGHT * multiplier;
+		buttonWait2->text->y = HEIGHT * multiplier;
 		buttonWait2->draw();
+		incHeight();
+	}
+	if (boolWait) {
+		buttonWait->button->y = HEIGHT * multiplier;
+		buttonWait->text->y = HEIGHT * multiplier;
+		buttonWait->draw();
+		incHeight();
+	}
 }
 
 bool ButtonManager::click(float motionX, float motionY) {

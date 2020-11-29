@@ -6,4 +6,6 @@ public:
 
 	bool physicalAttack;
 	//rango
+	bool closeRange;
+	bool longRange;
 };
