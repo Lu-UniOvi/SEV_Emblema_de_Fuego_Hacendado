@@ -53,6 +53,8 @@ public:
 	vector<vector<Tile*>> mapa; //mapa[columnas][filas]
 	list<vector<int>> range;
 	bool pintarRango = false;
+	list<vector<int>> enemyRange;
+	bool pintarEnemyRango = false;
 	Character* selectedCharacter;
 	vector<int> selectedSquare;
 
@@ -66,6 +68,7 @@ public:
 private:
 	SDL_Texture* marco;
 	SDL_Texture* blueSquare;
+	SDL_Texture* redSquare;
 
 	void drawBorder(Tile* tile, SDL_Texture* texture, float scrollX = 0);
 };

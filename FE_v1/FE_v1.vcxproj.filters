@@ -123,6 +123,9 @@
     <ClInclude Include="ButtonManagerParent.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="ResultPanel.h">
+      <Filter>Archivos de encabezado\Actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -193,6 +196,9 @@
     </ClCompile>
     <ClCompile Include="ButtonManagerParent.cpp">
       <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultPanel.cpp">
+      <Filter>Archivos de origen\Actor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

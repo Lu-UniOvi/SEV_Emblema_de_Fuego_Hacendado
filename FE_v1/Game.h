@@ -2,6 +2,7 @@
 
 // Todas las librerias de SDL y otras utilidades
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector> 
 using namespace std;

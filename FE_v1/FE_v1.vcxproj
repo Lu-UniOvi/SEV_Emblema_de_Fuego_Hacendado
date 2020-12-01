@@ -169,6 +169,7 @@
     <ClInclude Include="MountainTile.h" />
     <ClInclude Include="MovementType.h" />
     <ClInclude Include="Princess.h" />
+    <ClInclude Include="ResultPanel.h" />
     <ClInclude Include="Sword.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="Tile.h" />
@@ -194,6 +195,7 @@
     <ClCompile Include="MountainTile.cpp" />
     <ClCompile Include="MovementType.cpp" />
     <ClCompile Include="Princess.cpp" />
+    <ClCompile Include="ResultPanel.cpp" />
     <ClCompile Include="Sword.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="Tile.cpp" />

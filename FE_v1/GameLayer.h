@@ -18,6 +18,7 @@
 #include "Button.h"
 //#include "ButtonManager.h"
 #include "ButtonManagerParent.h"
+#include "ResultPanel.h"
 
 #include <fstream>
 #include <sstream>
@@ -44,11 +45,14 @@ public:
 	CharacterClass* obtainCharacterClass(char classCode);
 
 	void manageClickEvent(float motionX, float motionY);
+	void notMenuClick(float motionX, float motionY);
+	void mapClick(vector<int> clickedSquare);
+	void enemyClick(vector<int> clickedSquare);
 
 	void nextTurn();
 	bool isPlayerFase();
 	void moveCharacter(vector<int> clickedSquare);
-	void selectedCharacterAttacksEnemy(vector<int> clickedSquare);
+	map<string, int> selectedCharacterAttacksEnemy(vector<int> clickedSquare);
 
 	//Map
 	int mapWidth;
@@ -57,9 +61,13 @@ public:
 	//Game control
 	int turn;
 	bool buttonClicked;
+	bool boolSeleccionaEnemigo;
+	bool boolResultPanel;
 
 	//HUD
-	Text* turnText;
+	Text* textTurn;
 	bool paintMenu;
+
 	ButtonManagerParent* buttonManager;
+	ResultPanel* resultPanel;
 };

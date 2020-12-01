@@ -11,20 +11,18 @@ ButtonManager::ButtonManager(GameLayer* gl, Game* game)
 void ButtonManager::init() {
 	initHeight();
 
-	this->buttonWait = new Button("Esperar", HEIGHT * this->multiplier, game);
+	this->buttonWait = new Button("Esperar", HEIGHT * incHeight(), game);
 	this->boolWait = false;
-	incHeight();
-	this->buttonWait2 = new Button("Esperar", HEIGHT * this->multiplier, game);
-	this->boolWait2 = false;
-	incHeight();
+	this->buttonAttack = new Button("Ataca", HEIGHT * incHeight(), game);
+	this->boolAttack = false;
 }
 
 void ButtonManager::draw() {
 	initHeight();
-	if (boolWait2) {
-		buttonWait2->button->y = HEIGHT * multiplier;
-		buttonWait2->text->y = HEIGHT * multiplier;
-		buttonWait2->draw();
+	if (boolAttack) {
+		buttonAttack->button->y = HEIGHT * multiplier;
+		buttonAttack->text->y = HEIGHT * multiplier;
+		buttonAttack->draw();
 		incHeight();
 	}
 	if (boolWait) {
@@ -43,19 +41,25 @@ bool ButtonManager::click(float motionX, float motionY) {
 		this->unselectButtonPaint();
 		buttonClicked = true;
 	}
+	else if (boolAttack && buttonAttack->button->containsPoint(motionX, motionY)) {
+		gl->boolSeleccionaEnemigo = true;
+		this->unselectButtonPaint();
+		buttonClicked = true;
+	}
 
 	return buttonClicked;
 }
 
 void ButtonManager::unselectButtonPaint() {
 	boolWait = false;
-	boolWait2 = false;
+	boolAttack = false;
 }
 
 void ButtonManager::initHeight() {
 	this->multiplier = .2;
 }
 
-void ButtonManager::incHeight() {
+float ButtonManager::incHeight() {
 	this->multiplier += .1;
+	return multiplier;
 }

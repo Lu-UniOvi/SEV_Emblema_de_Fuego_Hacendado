@@ -23,5 +23,5 @@ public:
 private:
 	float multiplier;
 	void initHeight();
-	void incHeight();
+	float incHeight();
 };

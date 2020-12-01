@@ -4,6 +4,7 @@ MapManager::MapManager(Game* game) {
 	this->game = game;
 	this->marco = game->getTexture("res/marco.png");
 	this->blueSquare = game->getTexture("res/blue.png");
+	this->redSquare = game->getTexture("res/red.png");
 
 	this->pintarRango = false;
 	this->selectedCharacter = nullptr;
@@ -14,11 +15,52 @@ void MapManager::init() {
 	tiles.clear();
 	mapa.clear();
 	range.clear();
+	enemyRange.clear();
 	characters.clear();
 	characterPositions.clear();
 
 	this->pintarRango = false;
 	this->selectedCharacter = nullptr;
+}
+
+void MapManager::draw(float scrollX) {
+	//Draw Tiles
+	for (auto const& tile : tiles) {
+		tile->draw(scrollX);
+		this->drawBorder(tile, marco, scrollX);
+	}
+
+	if (pintarRango) {
+		for (auto const& v : this->range) {
+			Tile* tile = findClickedTile(v);
+			this->drawBorder(tile, blueSquare, scrollX);
+		}
+		if (pintarEnemyRango) {
+			for (auto const& v : this->enemyRange) {
+				Tile* tile = findClickedTile(v);
+				this->drawBorder(tile, redSquare, scrollX);
+			}
+		}
+	}
+
+	//Draw Characters
+	for (auto const& character : characters) {
+		character->draw(scrollX);
+	}
+
+	//Draw Enemies
+	for (auto const& enemy : enemies) {
+		enemy->draw(scrollX);
+	}
+}
+
+void MapManager::update() {
+	for (auto const& character : characters) {
+		character->update();
+	}
+	for (auto const& enemy : enemies) {
+		enemy->update();
+	}
 }
 
 void MapManager::addTile(Tile* tile) {
@@ -44,40 +86,6 @@ void MapManager::addEnemy(Enemy* character, int xpos, int ypos) {
 
 	vector<int> positions = { xpos, ypos };
 	enemyPositions[positions] = character;
-}
-
-void MapManager::draw(float scrollX) {
-	//Draw Tiles
-	for (auto const& tile : tiles)	{
-		tile->draw(scrollX);
-		this->drawBorder(tile, marco, scrollX);
-	}
-
-	if (pintarRango == true) {
-		for (auto const& v : this->range) {
-			Tile* tile = findClickedTile(v);
-			this->drawBorder(tile, blueSquare, scrollX);
-		}
-	}
-
-	//Draw Characters
-	for (auto const& character : characters) {
-		character->draw(scrollX);
-	}
-
-	//Draw Enemies
-	for (auto const& enemy : enemies) {
-		enemy->draw(scrollX);
-	}
-}
-
-void MapManager::update() {
-	for (auto const& character : characters) {
-		character->update();
-	}
-	for (auto const& enemy : enemies) {
-		enemy->update();
-	}
 }
 
 void MapManager::drawBorder(Tile* tile, SDL_Texture* texture, float scrollX) {
@@ -359,15 +367,31 @@ bool MapManager::enemyInAttackRange() {
 			left[0] = selectedSquare[0] - 1;
 			vector<int> right = selectedSquare;
 			right[0] = selectedSquare[0] + 1;
-			if (isEnemyInPosition(top) || isEnemyInPosition(bottom) 
-				|| isEnemyInPosition(left) || isEnemyInPosition(right))
+
+			if (isEnemyInPosition(top)) {
+				enemyRange.push_back(top);
 				isEnemy = true;
+			}
+			if (isEnemyInPosition(bottom)) {
+				enemyRange.push_back(bottom);
+				isEnemy = true;
+			}
+			if (isEnemyInPosition(left)) {
+				enemyRange.push_back(left);
+				isEnemy = true;
+			}
+			if (isEnemyInPosition(right)) {
+				enemyRange.push_back(right);
+				isEnemy = true;
+			}
 		}
 		//LongRange
 		if (selectedCharacter->characterClass->weaponType->longRange) {
 			//Comprueba casillas a una casilla de distancia, contando diagonales
 		}
 	}
+
+	pintarEnemyRango = isEnemy;
 
 	return isEnemy;
 }

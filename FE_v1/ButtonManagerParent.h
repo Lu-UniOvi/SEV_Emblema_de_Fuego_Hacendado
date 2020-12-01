@@ -14,6 +14,6 @@ public:
 
 	Button* buttonWait;
 	bool boolWait;
-	Button* buttonWait2;
-	bool boolWait2;
+	Button* buttonAttack;
+	bool boolAttack;
 };

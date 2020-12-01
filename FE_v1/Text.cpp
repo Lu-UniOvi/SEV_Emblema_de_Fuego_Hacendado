@@ -17,7 +17,7 @@ void Text::draw() {
 
 	TTF_Font* font = menuFont ? game->menuFont : game->font;
 
-	SDL_Surface* surface = TTF_RenderText_Blended(font, content.c_str(), color);
+	SDL_Surface* surface = TTF_RenderText_Blended_Wrapped(font, content.c_str(), color, 350);
 	// c_str() transforma el string a cost *char;
 	SDL_Texture* Texture = SDL_CreateTextureFromSurface(game->renderer, surface);
 
