@@ -36,6 +36,7 @@ public:
 
 	void update() override;
 	void draw() override;
+	void despintar();
 
 	void loadMap(string name);
 	void loadMapObject(char character, float x, float y);

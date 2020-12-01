@@ -52,6 +52,13 @@ void GameLayer::draw() {
 	SDL_RenderPresent(game->renderer); // Renderiza
 }
 
+void GameLayer::despintar() {
+	mapManager->deselectRange();
+	buttonManager->unselectButtonPaint();
+	boolSeleccionaEnemigo = false;
+	boolResultPanel = false;
+}
+
 void GameLayer::processControls() {
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
@@ -77,7 +84,8 @@ void GameLayer::mouseToControls(SDL_Event event) {
 
 	// Cada vez que hacen click
 	if (event.type == SDL_MOUSEBUTTONDOWN) {
-		manageClickEvent(motionX, motionY);
+		if (isPlayerFase())
+			manageClickEvent(motionX, motionY);
 	}
 }
 
@@ -292,15 +300,14 @@ void GameLayer::notMenuClick(float motionX, float motionY) {
 
 			mapManager->selectedCharacter->canPlay = false;
 
+			mapManager->moveSelectedCharacterTo(mapManager->selectedSquare);
+
 			if (mapManager->selectedCharacter->currentHP == 0)
 				mapManager->deleteCharacter(mapManager->selectedCharacter);
 			if (mapManager->selectedEnemy->currentHP == 0)
 				mapManager->deleteEnemy(mapManager->selectedEnemy);
 		}
-		mapManager->deselectRange();
-		buttonManager->unselectButtonPaint();
-		boolSeleccionaEnemigo = false;
-		boolResultPanel = false;
+		despintar();
 	}
 	else if (mapManager->pintarRango) {
 		mapClick(clickedSquare);
@@ -312,10 +319,7 @@ void GameLayer::notMenuClick(float motionX, float motionY) {
 			mapManager->setRange(character);
 		}
 		else {
-			mapManager->deselectRange();
-			buttonManager->unselectButtonPaint();
-			boolSeleccionaEnemigo = false;
-			boolResultPanel = false;
+			despintar();
 		}
 	}
 }
@@ -344,10 +348,7 @@ void GameLayer::mapClick(vector<int> clickedSquare) {
 		}
 	}
 	else {
-		mapManager->deselectRange();
-		buttonManager->unselectButtonPaint();
-		boolSeleccionaEnemigo = false;
-		boolResultPanel = false;
+		despintar();
 	}
 }
 
@@ -362,10 +363,7 @@ void GameLayer::enemyClick(vector<int> clickedSquare) {
 		mapManager->selectedEnemy = enemy;
 	}
 	else {
-		mapManager->deselectRange();
-		buttonManager->unselectButtonPaint();
-		boolSeleccionaEnemigo = false;
-		boolResultPanel = false;
+		despintar();
 	}
 }
 
@@ -393,7 +391,7 @@ void GameLayer::moveCharacter(vector<int> clickedSquare) {
 	mapManager->selectedCharacter->canPlay = false;
 
 	//Termina el turno de ese personaje
-	mapManager->deselectRange();
+	despintar();
 }
 
 map<string, int> GameLayer::selectedCharacterAttacksEnemy(vector<int> clickedSquare) {

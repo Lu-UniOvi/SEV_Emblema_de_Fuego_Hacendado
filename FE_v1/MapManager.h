@@ -24,6 +24,7 @@ public:
 	void deleteEnemy(Enemy* enemy);
 	void pop();
 	void setNumberOfColumns(int n);
+	void addEnemyRange(vector<int> a);
 
 	vector<int> findClickedSquare(float motionX, float motionY);
 	Tile* findClickedTile(vector<int> positions);

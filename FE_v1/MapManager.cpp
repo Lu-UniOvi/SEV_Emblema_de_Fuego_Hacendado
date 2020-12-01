@@ -132,6 +132,18 @@ void MapManager::drawBorder(Tile* tile, SDL_Texture* texture, float scrollX) {
 	SDL_RenderCopyEx(game->renderer, texture, &source, &destination, 0, nullptr, SDL_FLIP_NONE);
 }
 
+void MapManager::addEnemyRange(vector<int> a) {
+	bool add = true;
+	
+	for (auto const& b : enemyRange) {
+		if (b == a)
+			add = false;
+	}
+
+	if (add)
+		enemyRange.push_back(a);
+}
+
 void MapManager::pop() {
 	tiles.pop_back();
 	mapa[mapa.size()-1].pop_back();
@@ -311,6 +323,7 @@ void MapManager::deselectRange() {
 	this->pintarRango = false;
 	this->selectedCharacter = nullptr;
 	this->selectedSquare = {-1,-1};
+	this->enemyRange.clear();
 }
 
 vector<int> MapManager::getCharacterPosition(Character* character) {
@@ -397,19 +410,19 @@ bool MapManager::enemyInAttackRange() {
 			right[0] = selectedSquare[0] + 1;
 
 			if (isEnemyInPosition(top)) {
-				enemyRange.push_back(top);
+				addEnemyRange(top);
 				isEnemy = true;
 			}
 			if (isEnemyInPosition(bottom)) {
-				enemyRange.push_back(bottom);
+				addEnemyRange(bottom);
 				isEnemy = true;
 			}
 			if (isEnemyInPosition(left)) {
-				enemyRange.push_back(left);
+				addEnemyRange(left);
 				isEnemy = true;
 			}
 			if (isEnemyInPosition(right)) {
-				enemyRange.push_back(right);
+				addEnemyRange(right);
 				isEnemy = true;
 			}
 		}
