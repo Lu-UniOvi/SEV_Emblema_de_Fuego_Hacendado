@@ -1,4 +1,45 @@
-﻿  ResultPanel.cpp
+﻿  ButtonManager.cpp
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\ButtonManager.cpp(14,50): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\ButtonManager.cpp(16,50): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\ButtonManager.cpp(24,34): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\ButtonManager.cpp(30,32): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\ButtonManager.cpp(39,61): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\ButtonManager.cpp(39,52): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\ButtonManager.cpp(44,70): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\ButtonManager.cpp(44,61): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\ButtonManager.cpp(59,23): warning C4305: '=': truncamiento de 'double' a 'float'
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\ButtonManager.cpp(63,24): warning C4305: '+=': truncamiento de 'double' a 'float'
+  Game.cpp
+  GameLayer.cpp
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\GameLayer.cpp(20,77): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\GameLayer.cpp(75,16): warning C4244: 'inicializando': conversión de 'Sint32' a 'float'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\GameLayer.cpp(76,16): warning C4244: 'inicializando': conversión de 'Sint32' a 'float'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\GameLayer.cpp(103,13): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\GameLayer.cpp(104,13): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\GameLayer.cpp(203,10): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\GameLayer.cpp(204,10): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\GameLayer.cpp(235,10): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\GameLayer.cpp(236,10): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\GameLayer.cpp(284,65): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\GameLayer.cpp(284,56): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+  MapManager.cpp
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\MapManager.cpp(127,44): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\MapManager.cpp(128,26): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\MapManager.cpp(150,13): warning C4244: 'inicializando': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\MapManager.cpp(151,13): warning C4244: 'inicializando': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\MapManager.cpp(199,86): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\MapManager.cpp(208,12): warning C4018: '<': no coinciden signed/unsigned
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\MapManager.cpp(213,86): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\MapManager.cpp(227,86): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\MapManager.cpp(236,12): warning C4018: '<': no coinciden signed/unsigned
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\MapManager.cpp(241,86): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\MapManager.cpp(257,12): warning C4018: '<': no coinciden signed/unsigned
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\MapManager.cpp(262,91): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\MapManager.cpp(271,12): warning C4018: '<': no coinciden signed/unsigned
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\MapManager.cpp(276,91): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\MapManager.cpp(290,91): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+  ResultPanel.cpp
 D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\ResultPanel.cpp(5,44): warning C4244: 'argumento': conversión de 'double' a 'int'; posible pérdida de datos
 D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\FE_v1\ResultPanel.cpp(7,32): warning C4244: '=': conversión de 'double' a 'int'; posible pérdida de datos
+  Generando código...
   FE_v1.vcxproj -> D:\Usuarios\Lucian\Uni\2020-2021\Primer Semestre\SEV\Entrega Juego Personal C++ FE\FE_v1\Debug\FE_v1.exe

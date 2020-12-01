@@ -88,6 +88,34 @@ void MapManager::addEnemy(Enemy* character, int xpos, int ypos) {
 	enemyPositions[positions] = character;
 }
 
+void MapManager::deleteCharacter(Character* character) {
+	characters.remove(character);
+
+	vector<int> removePosition = { -1,-1 };
+
+	for (auto const& pair : characterPositions) {
+		if (pair.second == character)
+			removePosition = pair.first;
+	}
+
+	if (removePosition[0] != -1)
+		characterPositions.erase(removePosition);
+}
+
+void MapManager::deleteEnemy(Enemy* enemy) {
+	enemies.remove(enemy);
+
+	vector<int> removePosition = { -1,-1 };
+
+	for (auto const& pair : enemyPositions) {
+		if (pair.second == enemy)
+			removePosition = pair.first;
+	}
+
+	if (removePosition[0] != -1)
+		enemyPositions.erase(removePosition);
+}
+
 void MapManager::drawBorder(Tile* tile, SDL_Texture* texture, float scrollX) {
 	SDL_Rect source;
 	source.x = 0;

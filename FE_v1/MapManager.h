@@ -20,6 +20,8 @@ public:
 	void addTile(Tile* tile);
 	void addCharacter(Character* character, int xpos, int ypos);
 	void addEnemy(Enemy* character, int xpos, int ypos);
+	void deleteCharacter(Character* character);
+	void deleteEnemy(Enemy* enemy);
 	void pop();
 	void setNumberOfColumns(int n);
 
@@ -56,6 +58,7 @@ public:
 	list<vector<int>> enemyRange;
 	bool pintarEnemyRango = false;
 	Character* selectedCharacter;
+	Enemy* selectedEnemy;
 	vector<int> selectedSquare;
 
 	//Characters

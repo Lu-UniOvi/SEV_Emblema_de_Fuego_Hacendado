@@ -280,7 +280,29 @@ void GameLayer::notMenuClick(float motionX, float motionY) {
 	Tile* tile = mapManager->findClickedTile(clickedSquare);
 
 	//Si tiene que pintar el rango es que tiene seleccionado un character
-	if (mapManager->pintarRango) {
+	if (boolResultPanel) {
+		if (resultPanel->buttonAttack->button->containsPoint(motionX, motionY)) {
+			//Realiza el ataque
+			mapManager->selectedCharacter->currentHP =
+				mapManager->selectedCharacter->currentHP > resultPanel->result["damageTaken"] ?
+				mapManager->selectedCharacter->currentHP - resultPanel->result["damageTaken"] : 0;
+			mapManager->selectedEnemy->currentHP =
+				mapManager->selectedEnemy->currentHP > resultPanel->result["damageDealt"] ?
+				mapManager->selectedEnemy->currentHP - resultPanel->result["damageDealt"] : 0;
+
+			mapManager->selectedCharacter->canPlay = false;
+
+			if (mapManager->selectedCharacter->currentHP == 0)
+				mapManager->deleteCharacter(mapManager->selectedCharacter);
+			if (mapManager->selectedEnemy->currentHP == 0)
+				mapManager->deleteEnemy(mapManager->selectedEnemy);
+		}
+		mapManager->deselectRange();
+		buttonManager->unselectButtonPaint();
+		boolSeleccionaEnemigo = false;
+		boolResultPanel = false;
+	}
+	else if (mapManager->pintarRango) {
 		mapClick(clickedSquare);
 	}
 	else {
@@ -299,10 +321,7 @@ void GameLayer::notMenuClick(float motionX, float motionY) {
 }
 
 void GameLayer::mapClick(vector<int> clickedSquare) {
-	if (boolResultPanel) {
-
-	}
-	else if (boolSeleccionaEnemigo)
+	if (boolSeleccionaEnemigo)
 		enemyClick(clickedSquare);
 	else if (mapManager->isVectorInRange(mapManager->range, clickedSquare)
 		&& !mapManager->isCharacterInPosition(clickedSquare)) { //Esto se tendrá que mirar para el caso de healers
@@ -340,6 +359,7 @@ void GameLayer::enemyClick(vector<int> clickedSquare) {
 		map<string, int> result = selectedCharacterAttacksEnemy(clickedSquare);
 		resultPanel->actualizaText(result, mapManager->selectedCharacter, enemy);
 		boolResultPanel = true;
+		mapManager->selectedEnemy = enemy;
 	}
 	else {
 		mapManager->deselectRange();

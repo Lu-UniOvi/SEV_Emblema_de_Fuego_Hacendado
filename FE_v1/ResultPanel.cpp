@@ -15,7 +15,7 @@ void ResultPanel::draw() {
 }
 
 void ResultPanel::actualizaText(map<string, int> result, Character* player, Character* enemy) {
-
+	this->result = result;
 	string str;
 	int aux;
 

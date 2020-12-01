@@ -17,5 +17,6 @@ public:
 	Actor* panel;
 	Button* buttonAttack;
 	Text* texto;
+	map<string, int> result;
 };
 
