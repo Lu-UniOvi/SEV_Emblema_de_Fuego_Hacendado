@@ -11,6 +11,7 @@
 #include "Character.h"
 #include "CharacterClass.h"
 #include "Princess.h"
+#include "Soldier.h"
 
 #include "MapManager.h"
 

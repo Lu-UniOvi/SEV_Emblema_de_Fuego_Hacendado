@@ -164,12 +164,14 @@
     <ClInclude Include="GameLayer.h" />
     <ClInclude Include="GrassTile.h" />
     <ClInclude Include="Infantry.h" />
+    <ClInclude Include="Lance.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="MapManager.h" />
     <ClInclude Include="MountainTile.h" />
     <ClInclude Include="MovementType.h" />
     <ClInclude Include="Princess.h" />
     <ClInclude Include="ResultPanel.h" />
+    <ClInclude Include="Soldier.h" />
     <ClInclude Include="Sword.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="Tile.h" />
@@ -189,6 +191,7 @@
     <ClCompile Include="GameLayer.cpp" />
     <ClCompile Include="GrassTile.cpp" />
     <ClCompile Include="Infantry.cpp" />
+    <ClCompile Include="Lance.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MapManager.cpp" />
@@ -196,6 +199,7 @@
     <ClCompile Include="MovementType.cpp" />
     <ClCompile Include="Princess.cpp" />
     <ClCompile Include="ResultPanel.cpp" />
+    <ClCompile Include="Soldier.cpp" />
     <ClCompile Include="Sword.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="Tile.cpp" />

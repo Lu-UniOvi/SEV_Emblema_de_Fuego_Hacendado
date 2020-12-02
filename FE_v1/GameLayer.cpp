@@ -34,6 +34,10 @@ void GameLayer::update() {
 	if (mapManager->noUnitsNextToPlay(isPlayerFase())) {
 		this->nextTurn();
 	}
+
+	if (!isPlayerFase()) {
+		//Toda la lógica del turno enemigo
+	}
 }
 
 void GameLayer::draw() {
@@ -259,6 +263,11 @@ CharacterClass* GameLayer::obtainCharacterClass(char classCode) {
 	case 'p': {
 		//cout << "Princess" << endl;
 		charClass = new Princess();
+		break;
+	}
+	case 's': {
+		//cout << "Princess" << endl;
+		charClass = new Soldier();
 		break;
 	}
 	default:

@@ -2,9 +2,9 @@
 
 #include "WeaponType.h"
 
-class Sword : public WeaponType {
+class Lance : public WeaponType {
 public:
-	Sword();
+	Lance();
 
 	float getBonus(WeaponType* wt) override;
 };

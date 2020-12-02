@@ -126,6 +126,12 @@
     <ClInclude Include="ResultPanel.h">
       <Filter>Archivos de encabezado\Actor</Filter>
     </ClInclude>
+    <ClInclude Include="Soldier.h">
+      <Filter>Archivos de encabezado\CharacterClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Lance.h">
+      <Filter>Archivos de encabezado\WeaponTypes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -199,6 +205,12 @@
     </ClCompile>
     <ClCompile Include="ResultPanel.cpp">
       <Filter>Archivos de origen\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Soldier.cpp">
+      <Filter>Archivos de origen\CharacterClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Lance.cpp">
+      <Filter>Archivos de origen\WeaponTypes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
