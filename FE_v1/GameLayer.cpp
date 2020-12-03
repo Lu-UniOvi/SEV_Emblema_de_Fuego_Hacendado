@@ -37,6 +37,14 @@ void GameLayer::update() {
 
 	if (!isPlayerFase()) {
 		//Toda la lógica del turno enemigo
+		//Calcula los movimientos que se tienen que hacer
+		map<Enemy*, vector<int>> posicionesFinalesEnemigos = mapManager->calculateEnemyFase();
+
+		//Aplica las posiciones finales
+		for (auto const& pair : posicionesFinalesEnemigos) {
+			mapManager->moveEnemyTo(pair.second, pair.first);
+			cout << pair.second[0] << endl;
+		}
 	}
 }
 
@@ -88,6 +96,7 @@ void GameLayer::mouseToControls(SDL_Event event) {
 
 	// Cada vez que hacen click
 	if (event.type == SDL_MOUSEBUTTONDOWN) {
+		cout << "click" << endl;
 		if (isPlayerFase())
 			manageClickEvent(motionX, motionY);
 	}
@@ -300,17 +309,12 @@ void GameLayer::notMenuClick(float motionX, float motionY) {
 	if (boolResultPanel) {
 		if (resultPanel->buttonAttack->button->containsPoint(motionX, motionY)) {
 			//Realiza el ataque
-			mapManager->selectedCharacter->currentHP =
-				mapManager->selectedCharacter->currentHP > resultPanel->result["damageTaken"] ?
-				mapManager->selectedCharacter->currentHP - resultPanel->result["damageTaken"] : 0;
-			mapManager->selectedEnemy->currentHP =
-				mapManager->selectedEnemy->currentHP > resultPanel->result["damageDealt"] ?
-				mapManager->selectedEnemy->currentHP - resultPanel->result["damageDealt"] : 0;
-
-			mapManager->selectedCharacter->canPlay = false;
+			mapManager->realizaAtaque(mapManager->selectedCharacter, 
+				mapManager->selectedEnemy, resultPanel->result);
 
 			mapManager->moveSelectedCharacterTo(mapManager->selectedSquare);
 
+			//MapManager no elimina por defecto a los personajes porque no sabe si son Character o Enemy
 			if (mapManager->selectedCharacter->currentHP == 0)
 				mapManager->deleteCharacter(mapManager->selectedCharacter);
 			if (mapManager->selectedEnemy->currentHP == 0)

@@ -168,6 +168,7 @@ vector<int> MapManager::findClickedSquare(float motionX, float motionY) {
 }
 
 Tile* MapManager::findClickedTile(vector<int> positions) {
+	//cout << "findClickedTile: " << positions[1] << ", " << positions[0] << endl;
 	return mapa[positions[1]][positions[0]];
 }
 
@@ -373,6 +374,23 @@ void MapManager::moveSelectedCharacterTo(vector<int> position) {
 	}
 }
 
+void MapManager::moveEnemyTo(vector<int> position, Enemy* enemy) {
+	//Encontrar el character en characterPositions
+	vector<int> originalPos = getEnemyPosition(enemy);
+	
+	if (findClickedEnemy(originalPos) != nullptr) {
+		//Eliminar esa referencia en enemyPositions
+		enemyPositions.erase(originalPos);
+		//Añadir nueva pareja vector,character
+		enemyPositions[position] = enemy;
+
+		//Actualizar la posicion del character
+		Tile* tile = this->findClickedTile(position);
+		enemy->x = tile->x;
+		enemy->y = tile->y;
+	}
+}
+
 bool MapManager::isEnemyInPosition(vector<int> position) {
 	return findClickedEnemy(position) != nullptr;
 }
@@ -428,6 +446,7 @@ bool MapManager::enemyInAttackRange() {
 		}
 		//LongRange
 		if (selectedCharacter->characterClass->weaponType->longRange) {
+			// TODO
 			//Comprueba casillas a una casilla de distancia, contando diagonales
 		}
 	}
@@ -435,4 +454,110 @@ bool MapManager::enemyInAttackRange() {
 	pintarEnemyRango = isEnemy;
 
 	return isEnemy;
+}
+
+map<Enemy*, vector<int>> MapManager::calculateEnemyFase() {
+	map<Enemy*, vector<int>> posicionesFinalesEnemigos;
+	for (auto const& enemy : enemies) {
+		if (enemy->canPlay) {
+			//Conseguir su rango de acción
+			vector<int> enemyPosition = this->getEnemyPosition(enemy);
+
+			list<vector<int>> movementRange = compruebaIrAdyacentes(enemyPosition[0],
+				enemyPosition[1], 0, enemy->characterClass->movementType, list<vector<int>>());
+			movementRange = this->addToRange(movementRange, compruebaIrAdyacentesAbajo(enemyPosition[0],
+				enemyPosition[1], 0, enemy->characterClass->movementType, list<vector<int>>()));
+
+			// TODO
+			//De momento hagamos como que los enemigos solo pueden atacar a casillas que pueden moverse.
+			/*enemy->characterClass->movementType->movementRange +=
+				enemy->characterClass->weaponType->longRange ? 2 : 1;*/
+
+				//Puedo o hacer lo mismo aumentando el movement range y volviendolo a poner como estaba despues de conseguir el rango
+				//O me curro otro metodo
+				//O paso de todo y los enemigos son inferiores porque anime powers
+
+				//Obtener los personajes que se encuentran en ese rango
+			list<Character*> charactersInRange;
+			for (auto const& pos : movementRange) {
+				Character* chara = findClickedCharacter(pos);
+				if (chara != nullptr)
+					charactersInRange.push_back(chara);
+			}
+
+			if (charactersInRange.size() != 0) {
+				//Calcular el resultado de atacar a los personajes en rango
+				map<Character*, map<string, int>> resultados;
+				for (auto const& chara : charactersInRange) {
+					resultados[chara] = enemy->checkAttack(chara);
+				}
+				//Escoger el mejor resultado
+				map<string, int> mejor;
+				Character* mejorChar = nullptr;
+				mejor["damageDealt"] = -1;
+				mejor["damageTaken"] = 2147483647;
+				for (auto const& pair : resultados) {
+					if (pair.second.at("damageDealt") > mejor["damageDealt"]
+						|| pair.second.at("damageTaken") < mejor["damageTaken"]) {
+						mejor = pair.second;
+						mejorChar = pair.first;
+					}
+				}
+				//Aplicar el ataque
+				realizaAtaque(enemy, mejorChar, mejor);
+			}
+			else { //Si no hay personajes en rango 
+				//Calcular la distancia a todos los personajes
+				map<vector<int>, int> distancias;
+				for (auto const& pair : characterPositions) {
+					distancias[pair.first] = abs(enemyPosition[0] - pair.first[0])
+						+ abs(enemyPosition[1] - pair.first[1]);
+				}
+				//Escoger el más cercano
+				vector<int> closest = {-1, -1};
+				int distancia = 2147483647;
+				for (auto const& pair : distancias) {
+					if (pair.second < distancia) {
+						distancia = pair.second;
+						closest = pair.first;
+					}
+				}
+				// TODO
+				//Encontrar casilla adyacente al Character que esté en rango del enemigo
+				vector<int> aux = { closest[0], closest[1] - 1 }; //top
+				posicionesFinalesEnemigos[enemy] = {-1,-1};
+				if (find(movementRange.begin(), movementRange.end(), aux) != movementRange.end()) {
+					posicionesFinalesEnemigos[enemy] = aux;
+				}
+				aux = { closest[0] + 1, closest[1] }; //right
+				if (find(movementRange.begin(), movementRange.end(), aux) != movementRange.end()
+					&& posicionesFinalesEnemigos[enemy][0] != -1) {
+					posicionesFinalesEnemigos[enemy] = aux;
+				}
+				aux = { closest[0], closest[1] + 1 }; //bottom
+				if (find(movementRange.begin(), movementRange.end(), aux) != movementRange.end()
+					&& posicionesFinalesEnemigos[enemy][0] != -1) {
+					posicionesFinalesEnemigos[enemy] = aux;
+				}
+				aux = { closest[0] - 1, closest[1] }; //left
+				if (find(movementRange.begin(), movementRange.end(), aux) != movementRange.end()
+					&& posicionesFinalesEnemigos[enemy][0] != -1) {
+					posicionesFinalesEnemigos[enemy] = aux;
+				}
+			}
+		}
+	}
+
+	return posicionesFinalesEnemigos;
+}
+
+void MapManager::realizaAtaque(Character* player, Character* target, map<string, int> result) {
+	player->currentHP =
+		player->currentHP > result["damageTaken"] ?
+		player->currentHP - result["damageTaken"] : 0;
+	target->currentHP =
+		target->currentHP > result["damageDealt"] ?
+		target->currentHP - result["damageDealt"] : 0;
+
+	player->canPlay = false;
 }

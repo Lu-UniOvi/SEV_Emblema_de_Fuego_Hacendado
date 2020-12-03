@@ -42,11 +42,15 @@ public:
 	bool isVectorInRange(list<vector<int>> lista, vector<int> v);
 	bool isCharacterInPosition(vector<int> position);
 	void moveSelectedCharacterTo(vector<int> square);
+	void moveEnemyTo(vector<int> position, Enemy* enemy);
 	bool isEnemyInPosition(vector<int> position);
 
 	bool noUnitsNextToPlay(bool playerFase);
 
 	bool enemyInAttackRange();
+
+	map<Enemy*, vector<int>> calculateEnemyFase();
+	void realizaAtaque(Character* player, Character* target, map<string, int> result);
 
 	Game* game;
 	int numberOfColumns;

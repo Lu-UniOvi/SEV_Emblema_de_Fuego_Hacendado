@@ -5,6 +5,7 @@
 #include <sstream>
 #include <string>
 #include <vector> 
+#include <stdlib.h>
 using namespace std;
 #include <SDL.h>
 #include <SDL_image.h>
@@ -15,8 +16,8 @@ using namespace std;
 class Layer;
 
 // Valores generales
-#define WIDTH 480
-#define HEIGHT 320
+#define WIDTH 580
+#define HEIGHT 420
 
 class Game {
 public:
