@@ -62,7 +62,8 @@ void GameLayer::draw() {
 		resultPanel->draw();
 	}
 
-	if (boolDescriptionPanel) {
+	if (boolDescriptionPanel && 
+		(!paintMenu || !boolResultPanel)) {
 		descriptionPanel->draw();
 	}
 
@@ -115,12 +116,10 @@ void GameLayer::displayDescriptionPanel(float motionX, float motionY) {
 	Character* character = mapManager->findClickedCharacter(clickedSquare);
 	Enemy* enemy = mapManager->findClickedEnemy(clickedSquare);
 	if (character != nullptr) {
-		cout << character->toString() << endl;
 		descriptionPanel->texto->content = character->toString();
 		boolDescriptionPanel = true;
 	}
 	if (enemy != nullptr) {
-		cout << enemy->toString() << endl;
 		descriptionPanel->texto->content = enemy->toString();
 		boolDescriptionPanel = true;
 	}
