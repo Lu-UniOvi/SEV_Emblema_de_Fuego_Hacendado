@@ -45,7 +45,14 @@ void GameLayer::update() {
 		for (auto const& pair : posicionesFinalesEnemigos) {
 			mapManager->moveEnemyTo(pair.second, pair.first);
 			cout << pair.second[0] << endl;
+
+			if (pair.first->currentHP <= 0)
+				mapManager->deleteEnemy(pair.first);
 		}
+
+		for (auto const& character : mapManager->characters)
+			if (character->currentHP <= 0)
+				mapManager->deleteCharacter(character);
 	}
 }
 
@@ -331,7 +338,6 @@ void GameLayer::notMenuClick(float motionX, float motionY) {
 	vector<int> clickedSquare = mapManager->findClickedSquare(motionX, motionY);
 	Tile* tile = mapManager->findClickedTile(clickedSquare);
 
-	//Si tiene que pintar el rango es que tiene seleccionado un character
 	if (boolResultPanel) {
 		if (resultPanel->buttonAttack->button->containsPoint(motionX, motionY)) {
 			//Realiza el ataque
@@ -347,7 +353,7 @@ void GameLayer::notMenuClick(float motionX, float motionY) {
 				mapManager->deleteEnemy(mapManager->selectedEnemy);
 		}
 		despintar();
-	}
+	} //Si tiene que pintar el rango es que tiene seleccionado un character
 	else if (mapManager->pintarRango) {
 		mapClick(clickedSquare);
 	}
@@ -364,10 +370,11 @@ void GameLayer::notMenuClick(float motionX, float motionY) {
 }
 
 void GameLayer::mapClick(vector<int> clickedSquare) {
+	Character* character = mapManager->findClickedCharacter(clickedSquare);
 	if (boolSeleccionaEnemigo)
 		enemyClick(clickedSquare);
 	else if (mapManager->isVectorInRange(mapManager->range, clickedSquare)
-		&& !mapManager->isCharacterInPosition(clickedSquare)) { //Esto se tendrá que mirar para el caso de healers
+		&& ( character == nullptr || character == mapManager->selectedCharacter )) {
 
 		//Guarda el selectedTile
 		mapManager->selectedSquare = clickedSquare;

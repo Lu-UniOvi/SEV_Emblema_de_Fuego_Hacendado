@@ -208,7 +208,7 @@ list<vector<int>> MapManager::compruebaIrAdyacentes(int x, int y, int coste, Mov
 		Tile* t = mapa[y - 1][x];
 		vector<int> v = { x, y - 1 };
 		if (mt->costeMovimiento(t) + coste < mt->movementRange
-			&& !isVectorInRange(lista, v)) {
+			&& !isVectorInRange(lista, v) && findClickedEnemy(v) == nullptr) {
 			list<vector<int>> lista2 = compruebaIrAdyacentes(x, y - 1, mt->costeMovimiento(t) + coste, mt, lista);
 
 			for (auto const& a : lista2) {
@@ -222,7 +222,7 @@ list<vector<int>> MapManager::compruebaIrAdyacentes(int x, int y, int coste, Mov
 		Tile* t = mapa[y][x + 1];
 		vector<int> v = { x + 1, y };
 		if (mt->costeMovimiento(t) + coste < mt->movementRange
-			&& !isVectorInRange(lista, v)) {
+			&& !isVectorInRange(lista, v) && findClickedEnemy(v) == nullptr) {
 			list<vector<int>> lista2 = compruebaIrAdyacentes(x + 1, y, mt->costeMovimiento(t) + coste, mt, lista);
 
 			for (auto const& a : lista2) {
@@ -236,7 +236,7 @@ list<vector<int>> MapManager::compruebaIrAdyacentes(int x, int y, int coste, Mov
 		Tile* t = mapa[y][x - 1];
 		vector<int> v = { x - 1, y };
 		if (mt->costeMovimiento(t) + coste < mt->movementRange
-			&& !isVectorInRange(lista, v)) {
+			&& !isVectorInRange(lista, v) && findClickedEnemy(v) == nullptr) {
 			list<vector<int>> lista2 = compruebaIrAdyacentes(x - 1, y, mt->costeMovimiento(t) + coste, mt, lista);
 
 			for (auto const& a : lista2) {
@@ -250,7 +250,7 @@ list<vector<int>> MapManager::compruebaIrAdyacentes(int x, int y, int coste, Mov
 		Tile* t = mapa[y + 1][x];
 		vector<int> v = { x, y + 1 };
 		if (mt->costeMovimiento(t) + coste < mt->movementRange
-			&& !isVectorInRange(lista, v)) {
+			&& !isVectorInRange(lista, v) && findClickedEnemy(v) == nullptr) {
 			list<vector<int>> lista2 = compruebaIrAdyacentes(x, y + 1, mt->costeMovimiento(t) + coste, mt, lista);
 
 			for (auto const& a : lista2) {
@@ -271,7 +271,7 @@ list<vector<int>> MapManager::compruebaIrAdyacentesAbajo(int x, int y, int coste
 		Tile* t = mapa[y + 1][x];
 		vector<int> v = { x, y + 1 };
 		if (mt->costeMovimiento(t) + coste < mt->movementRange
-			&& !isVectorInRange(lista, v)) {
+			&& !isVectorInRange(lista, v) && findClickedEnemy(v) == nullptr) {
 			list<vector<int>> lista2 = compruebaIrAdyacentesAbajo(x, y + 1, mt->costeMovimiento(t) + coste, mt, lista);
 
 			for (auto const& a : lista2) {
@@ -285,7 +285,7 @@ list<vector<int>> MapManager::compruebaIrAdyacentesAbajo(int x, int y, int coste
 		Tile* t = mapa[y][x + 1];
 		vector<int> v = { x + 1, y };
 		if (mt->costeMovimiento(t) + coste < mt->movementRange
-			&& !isVectorInRange(lista, v)) {
+			&& !isVectorInRange(lista, v) && findClickedEnemy(v) == nullptr) {
 			list<vector<int>> lista2 = compruebaIrAdyacentesAbajo(x + 1, y, mt->costeMovimiento(t) + coste, mt, lista);
 
 			for (auto const& a : lista2) {
@@ -299,7 +299,7 @@ list<vector<int>> MapManager::compruebaIrAdyacentesAbajo(int x, int y, int coste
 		Tile* t = mapa[y][x - 1];
 		vector<int> v = { x - 1, y };
 		if (mt->costeMovimiento(t) + coste < mt->movementRange
-			&& !isVectorInRange(lista, v)) {
+			&& !isVectorInRange(lista, v) && findClickedEnemy(v) == nullptr) {
 			list<vector<int>> lista2 = compruebaIrAdyacentesAbajo(x - 1, y, mt->costeMovimiento(t) + coste, mt, lista);
 
 			for (auto const& a : lista2) {
@@ -446,7 +446,6 @@ bool MapManager::enemyInAttackRange() {
 		}
 		//LongRange
 		if (selectedCharacter->characterClass->weaponType->longRange) {
-			// TODO
 			//Comprueba casillas a una casilla de distancia, contando diagonales
 			vector<int> top = selectedSquare;
 			top[1] = selectedSquare[1] - 1;
