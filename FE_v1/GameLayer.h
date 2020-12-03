@@ -35,6 +35,7 @@ public:
 	void processControls() override;
 	void keysToControls(SDL_Event event);
 	void mouseToControls(SDL_Event event);
+	void displayDescriptionPanel(float motionX, float motionY);
 
 	void update() override;
 	void draw() override;

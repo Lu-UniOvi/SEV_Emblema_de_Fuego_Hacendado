@@ -15,7 +15,7 @@ void GameLayer::init() {
 	this->paintMenu = false;
 	this->boolSeleccionaEnemigo = false;
 	this->boolResultPanel = false;
-	this->boolDescriptionPanel = true;
+	this->boolDescriptionPanel = false;
 
 	//Load HUD
 	this->textTurn = new Text("hola", WIDTH * 0.13, HEIGHT * 0.05, false, 350, game);
@@ -31,9 +31,6 @@ void GameLayer::init() {
 
 void GameLayer::update() {
 	mapManager->update();
-
-	vector<int> aux = { 1, 2 };
-	descriptionPanel->texto->content = mapManager->findClickedCharacter(aux)->toString();
 
 	if (mapManager->noUnitsNextToPlay(isPlayerFase())) {
 		this->nextTurn();
@@ -104,22 +101,31 @@ void GameLayer::mouseToControls(SDL_Event event) {
 
 	// Cada vez que hacen click
 	if (event.type == SDL_MOUSEBUTTONDOWN) {
-		cout << "click" << endl;
 		if (isPlayerFase())
 			manageClickEvent(motionX, motionY);
 	}
 	if (event.type == SDL_MOUSEMOTION) {
-		vector<int> clickedSquare = mapManager->findClickedSquare(motionX, motionY);
+		displayDescriptionPanel(motionX, motionY);
+	}
+}
 
-		Character* character = mapManager->findClickedCharacter(clickedSquare);
-		if (character != nullptr) {
-			cout << character->toString() << endl;
-		}
+void GameLayer::displayDescriptionPanel(float motionX, float motionY) {
+	vector<int> clickedSquare = mapManager->findClickedSquare(motionX, motionY);
 
-		character = mapManager->findClickedEnemy(clickedSquare);
-		if (character != nullptr) {
-			cout << character->toString() << endl;
-		}
+	Character* character = mapManager->findClickedCharacter(clickedSquare);
+	Enemy* enemy = mapManager->findClickedEnemy(clickedSquare);
+	if (character != nullptr) {
+		cout << character->toString() << endl;
+		descriptionPanel->texto->content = character->toString();
+		boolDescriptionPanel = true;
+	}
+	if (enemy != nullptr) {
+		cout << enemy->toString() << endl;
+		descriptionPanel->texto->content = enemy->toString();
+		boolDescriptionPanel = true;
+	}
+	if (character == nullptr && enemy == nullptr) {
+		boolDescriptionPanel = false;
 	}
 }
 
