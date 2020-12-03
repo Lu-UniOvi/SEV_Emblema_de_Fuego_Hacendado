@@ -100,6 +100,14 @@ void GameLayer::mouseToControls(SDL_Event event) {
 		if (isPlayerFase())
 			manageClickEvent(motionX, motionY);
 	}
+	if (event.type == SDL_MOUSEMOTION) {
+		vector<int> clickedSquare = mapManager->findClickedSquare(motionX, motionY);
+		Character* character = mapManager->findClickedCharacter(clickedSquare);
+		Enemy* enemy = mapManager->findClickedEnemy(clickedSquare);
+		if (character != nullptr || enemy != nullptr) {
+			cout << character->toString() << endl;
+		}
+	}
 }
 
 void GameLayer::loadMap(string name) {

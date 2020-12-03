@@ -9,4 +9,5 @@ public:
 
 	//Metodos
 	bool isAlly() override;
+	string toString();
 };

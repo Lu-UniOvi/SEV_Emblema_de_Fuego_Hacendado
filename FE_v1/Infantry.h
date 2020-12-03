@@ -7,4 +7,5 @@ class Infantry : public MovementType {
 public:
 	Infantry();
 	float costeMovimiento(Tile* tile) override;
+	string toString() override;
 };

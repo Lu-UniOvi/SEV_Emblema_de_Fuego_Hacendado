@@ -8,3 +8,7 @@ Infantry::Infantry()
 float Infantry::costeMovimiento(Tile* tile) {
 	return tile->movementCost;
 }
+
+string Infantry::toString() {
+	return "Infantry";
+}

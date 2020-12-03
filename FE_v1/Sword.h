@@ -7,4 +7,5 @@ public:
 	Sword();
 
 	float getBonus(WeaponType* wt) override;
+	string toString() override;
 };

@@ -14,3 +14,7 @@ float Lance::getBonus(WeaponType* wt) {
 		return 1.2f;
 	return 1.0f;
 }
+
+string Lance::toString() {
+	return "Lance";
+}

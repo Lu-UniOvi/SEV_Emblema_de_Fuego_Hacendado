@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Game.h"
+
 enum class WeaponTypeId {
 	SWORD, LANCE, AXE, TOME
 };
@@ -16,4 +18,5 @@ public:
 	bool longRange;
 
 	virtual float getBonus(WeaponType* wt);
+	virtual string toString();
 };

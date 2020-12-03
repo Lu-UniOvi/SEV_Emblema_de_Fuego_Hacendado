@@ -36,4 +36,5 @@ public:
 	virtual bool isAlly();
 	map<string, int> checkAttack(Character* target); //this inicia el ataque
 	int calculateDamage(Character* target);
+	string toString();
 };

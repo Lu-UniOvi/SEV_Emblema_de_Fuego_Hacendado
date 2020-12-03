@@ -111,3 +111,23 @@ int Character::calculateDamage(Character* target) {
 			getBonus(target->characterClass->weaponType) - target->res; //Le debería sumar el ataque del arma
 	}
 }
+
+string Character::toString() {
+	string str = string();
+	str += name;
+	str += "\n";
+	str += characterClass->toString();
+	str += "\n";
+	str += "HP: " + to_string(currentHP) + " / " + to_string(hp);
+	str += "\n";
+	str += "Atk: " + to_string(atk);
+	str += "\n";
+	str += "Spd: " + to_string(spd);
+	str += "\n";
+	str += "Def: " + to_string(def);
+	str += "\n";
+	str += "Res: " + to_string(res);
+	str += "\n";
+
+	return str;
+}

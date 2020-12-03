@@ -14,3 +14,7 @@ float Sword::getBonus(WeaponType* wt) {
 		return 1.2f;
 	return 1.0f;
 }
+
+string Sword::toString() {
+	return "Sword";
+}

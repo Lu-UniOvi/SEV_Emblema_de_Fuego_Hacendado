@@ -16,8 +16,8 @@ using namespace std;
 class Layer;
 
 // Valores generales
-#define WIDTH 580
-#define HEIGHT 420
+#define WIDTH 480
+#define HEIGHT 320
 
 class Game {
 public:
