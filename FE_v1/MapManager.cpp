@@ -473,23 +473,23 @@ map<Enemy*, vector<int>> MapManager::calculateEnemyFase() {
 			/*enemy->characterClass->movementType->movementRange +=
 				enemy->characterClass->weaponType->longRange ? 2 : 1;*/
 
-				//Puedo o hacer lo mismo aumentando el movement range y volviendolo a poner como estaba despues de conseguir el rango
-				//O me curro otro metodo
-				//O paso de todo y los enemigos son inferiores porque anime powers
+			//Puedo o hacer lo mismo aumentando el movement range y volviendolo a poner como estaba despues de conseguir el rango
+			//O me curro otro metodo
+			//O paso de todo y los enemigos son inferiores porque anime powers
 
-				//Obtener los personajes que se encuentran en ese rango
-			list<Character*> charactersInRange;
+			//Obtener los personajes que se encuentran en ese rango
+			map<Character*, vector<int>> charactersInRange;
 			for (auto const& pos : movementRange) {
 				Character* chara = findClickedCharacter(pos);
 				if (chara != nullptr)
-					charactersInRange.push_back(chara);
+					charactersInRange[chara] = pos;
 			}
 
 			if (charactersInRange.size() != 0) {
 				//Calcular el resultado de atacar a los personajes en rango
 				map<Character*, map<string, int>> resultados;
-				for (auto const& chara : charactersInRange) {
-					resultados[chara] = enemy->checkAttack(chara);
+				for (auto const& pair : charactersInRange) {
+					resultados[pair.first] = enemy->checkAttack(pair.first);
 				}
 				//Escoger el mejor resultado
 				map<string, int> mejor;
@@ -502,6 +502,64 @@ map<Enemy*, vector<int>> MapManager::calculateEnemyFase() {
 						mejor = pair.second;
 						mejorChar = pair.first;
 					}
+				}
+
+				//Selecciona la casilla a la que se moverá el enemigo para realizar el ataque
+				vector<int> posicionMejor = charactersInRange[mejorChar];
+				//Encuentra una casilla en la que se pueda posicionar el enemigo para atacar
+				if (enemy->characterClass->weaponType->closeRange) {
+					vector<int> top = posicionMejor;
+					top[1] = posicionMejor[1] - 1;
+					vector<int> right = posicionMejor;
+					right[0] = posicionMejor[0] + 1;
+					vector<int> bottom = posicionMejor;
+					bottom[0] = posicionMejor[1] + 1;
+					vector<int> left = posicionMejor;
+					left[0] = posicionMejor[0] - 1;
+
+					if (top[1] >= 0 && isVectorInRange(movementRange, top))
+						posicionesFinalesEnemigos[enemy] = top;
+					else if (right[0] < mapa[0].size() && isVectorInRange(movementRange, right))
+						posicionesFinalesEnemigos[enemy] = right;
+					else if (bottom[1] < mapa.size() && isVectorInRange(movementRange, bottom))
+						posicionesFinalesEnemigos[enemy] = bottom;
+					else if (left[0] >= 0 && isVectorInRange(movementRange, left))
+						posicionesFinalesEnemigos[enemy] = left;
+				}
+				if (enemy->characterClass->weaponType->longRange) {
+					vector<int> top = posicionMejor;
+					top[1] = posicionMejor[1] - 1;
+					vector<int> topright = top;
+					topright[0] = posicionMejor[0] + 1;
+					vector<int> right = posicionMejor;
+					right[0] = posicionMejor[0] + 1;
+					vector<int> bottomright = right;
+					bottomright[1] = posicionMejor[1] + 1;
+					vector<int> bottom = posicionMejor;
+					bottom[1] = posicionMejor[1] + 1;
+					vector<int> bottomleft = bottom;
+					bottomleft[0] = posicionMejor[0] - 1;
+					vector<int> left = posicionMejor;
+					left[0] = posicionMejor[0] - 1;
+					vector<int> topleft = top;
+					topleft[0] = posicionMejor[0] - 1;
+
+					if (top[1] >= 0 && isVectorInRange(movementRange, top))
+						posicionesFinalesEnemigos[enemy] = top;
+					else if (topright[0] < mapa[0].size() && topright[1] >= 0 && isVectorInRange(movementRange, topright))
+						posicionesFinalesEnemigos[enemy] = topright;
+					else if (right[0] < mapa[0].size() && isVectorInRange(movementRange, right))
+						posicionesFinalesEnemigos[enemy] = right;
+					else if (bottomright[0] < mapa[0].size() && bottomright[1] < mapa.size() && isVectorInRange(movementRange, bottomright))
+						posicionesFinalesEnemigos[enemy] = bottomright;
+					else if (bottom[1] < mapa.size() && isVectorInRange(movementRange, bottom))
+						posicionesFinalesEnemigos[enemy] = bottom;
+					else if (bottomleft[0] >= 0 && bottomleft[1] < mapa.size() && isVectorInRange(movementRange, bottomleft))
+						posicionesFinalesEnemigos[enemy] = bottomleft;
+					else if (left[0] >= 0 && isVectorInRange(movementRange, left))
+						posicionesFinalesEnemigos[enemy] = left;
+					else if (topleft[0] >= 0 && topleft[1] >= 0 && isVectorInRange(movementRange, topleft))
+						posicionesFinalesEnemigos[enemy] = topleft;
 				}
 				//Aplicar el ataque
 				realizaAtaque(enemy, mejorChar, mejor);
