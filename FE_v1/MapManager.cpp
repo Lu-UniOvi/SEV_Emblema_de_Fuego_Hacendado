@@ -420,12 +420,12 @@ bool MapManager::enemyInAttackRange() {
 			//Comprueba casillas adyacentes
 			vector<int> top = selectedSquare;
 			top[1] = selectedSquare[1] - 1;
+			vector<int> right = selectedSquare;
+			right[0] = selectedSquare[0] + 1;
 			vector<int> bottom = selectedSquare;
 			bottom[0] = selectedSquare[1] + 1;
 			vector<int> left = selectedSquare;
 			left[0] = selectedSquare[0] - 1;
-			vector<int> right = selectedSquare;
-			right[0] = selectedSquare[0] + 1;
 
 			if (isEnemyInPosition(top)) {
 				addEnemyRange(top);
@@ -448,6 +448,55 @@ bool MapManager::enemyInAttackRange() {
 		if (selectedCharacter->characterClass->weaponType->longRange) {
 			// TODO
 			//Comprueba casillas a una casilla de distancia, contando diagonales
+			vector<int> top = selectedSquare;
+			top[1] = selectedSquare[1] - 1;
+			vector<int> topright = top;
+			topright[0] = selectedSquare[0] + 1;
+			vector<int> right = selectedSquare;
+			right[0] = selectedSquare[0] + 1;
+			vector<int> bottomright = right;
+			bottomright[1] = selectedSquare[1] + 1;
+			vector<int> bottom = selectedSquare;
+			bottom[1] = selectedSquare[1] + 1;
+			vector<int> bottomleft = bottom;
+			bottomleft[0] = selectedSquare[0] - 1;
+			vector<int> left = selectedSquare;
+			left[0] = selectedSquare[0] - 1;
+			vector<int> topleft = top;
+			topleft[0] = selectedSquare[0] - 1;
+
+			if (isEnemyInPosition(top)) {
+				addEnemyRange(top);
+				isEnemy = true;
+			}
+			else if (isEnemyInPosition(topright)) {
+				addEnemyRange(topright);
+				isEnemy = true;
+			}
+			else if (isEnemyInPosition(right)) {
+				addEnemyRange(right);
+				isEnemy = true;
+			}
+			else if (isEnemyInPosition(bottomright)) {
+				addEnemyRange(bottomright);
+				isEnemy = true;
+			}
+			else if (isEnemyInPosition(bottom)) {
+				addEnemyRange(bottom);
+				isEnemy = true;
+			}
+			else if (isEnemyInPosition(bottomleft)) {
+				addEnemyRange(bottomleft);
+				isEnemy = true;
+			}
+			else if (isEnemyInPosition(left)) {
+				addEnemyRange(left);
+				isEnemy = true;
+			}
+			else if (isEnemyInPosition(topleft)) {
+				addEnemyRange(topleft);
+				isEnemy = true;
+			}
 		}
 	}
 
