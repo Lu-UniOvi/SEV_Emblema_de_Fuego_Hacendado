@@ -114,10 +114,7 @@ int Character::calculateDamage(Character* target) {
 
 string Character::toString() {
 	string str = string();
-	str += name;
-	str += "\n";
-	str += characterClass->toString();
-	str += "\n";
+	
 	str += "HP: " + to_string(currentHP) + " / " + to_string(hp);
 	str += "\n";
 	str += "Atk: " + to_string(atk);

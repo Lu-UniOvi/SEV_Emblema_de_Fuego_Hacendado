@@ -20,6 +20,7 @@
 //#include "ButtonManager.h"
 #include "ButtonManagerParent.h"
 #include "ResultPanel.h"
+#include "DescriptionPanel.h"
 
 #include <fstream>
 #include <sstream>
@@ -65,6 +66,7 @@ public:
 	bool buttonClicked;
 	bool boolSeleccionaEnemigo;
 	bool boolResultPanel;
+	bool boolDescriptionPanel;
 
 	//HUD
 	Text* textTurn;
@@ -72,4 +74,5 @@ public:
 
 	ButtonManagerParent* buttonManager;
 	ResultPanel* resultPanel;
+	DescriptionPanel* descriptionPanel;
 };

@@ -132,6 +132,9 @@
     <ClInclude Include="Lance.h">
       <Filter>Archivos de encabezado\WeaponTypes</Filter>
     </ClInclude>
+    <ClInclude Include="DescriptionPanel.h">
+      <Filter>Archivos de encabezado\Actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -211,6 +214,9 @@
     </ClCompile>
     <ClCompile Include="Lance.cpp">
       <Filter>Archivos de origen\WeaponTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="DescriptionPanel.cpp">
+      <Filter>Archivos de origen\Actor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

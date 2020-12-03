@@ -6,6 +6,7 @@ CharacterClass::CharacterClass(WeaponType* weaponType, MovementType* movementTyp
 }
 
 string CharacterClass::toString() {
-	return className + ": Uses " + weaponType->toString() +
-		"\nMovement Type: " + movementType->toString();
+	/*return className + ": Uses " + weaponType->toString() +
+		"\nMovement Type: " + movementType->toString();*/
+	return weaponType->toString() + ":" + movementType->toString();
 }

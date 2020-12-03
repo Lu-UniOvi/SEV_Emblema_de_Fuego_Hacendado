@@ -9,11 +9,3 @@ Enemy::Enemy(string name, int hp, int atk, int spd, int def, int res, CharacterC
 bool Enemy::isAlly() {
 	return false;
 }
-
-string Enemy::toString() {
-	cout << "enemy tostring" << endl;
-	string str = "";
-
-	return str;
-	//return Character::toString();
-}

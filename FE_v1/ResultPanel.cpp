@@ -5,7 +5,7 @@ ResultPanel::ResultPanel(Game* game) {
 	buttonAttack = new Button("Ataca", HEIGHT * .90, game);
 	buttonAttack->button->x = WIDTH * .5;
 	buttonAttack->text->x = WIDTH * .5;
-	texto = new Text("a\nb", WIDTH * .5, HEIGHT * .5, true, game);
+	texto = new Text("a\nb", WIDTH * .5, HEIGHT * .5, true, 350, game);
 }
 
 void ResultPanel::draw() {
