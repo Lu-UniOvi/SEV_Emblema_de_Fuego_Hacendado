@@ -102,19 +102,23 @@ map<string, int> Character::checkAttack(Character* target) {
 int Character::calculateDamage(Character* target) {
 	if (this->characterClass->weaponType->physicalAttack) {
 		//Ataca por defensa
-		return this->atk * characterClass->weaponType->
-			getBonus(target->characterClass->weaponType) - target->def; //Le debería sumar el ataque del arma
+		int aux = this->atk * characterClass->weaponType->
+			getBonus(target->characterClass->weaponType) - target->def;
+		return aux > 0 ? aux : 0;
 	}
 	else {
 		//Ataca por resistencia
-		return this->atk * characterClass->weaponType->
-			getBonus(target->characterClass->weaponType) - target->res; //Le debería sumar el ataque del arma
+		int aux = this->atk * characterClass->weaponType->
+			getBonus(target->characterClass->weaponType) - target->res;
+		return aux > 0 ? aux : 0;
 	}
 }
 
 string Character::toString() {
 	string str = string();
 	
+	str += characterClass->toString();
+	str += "\n";
 	str += "HP: " + to_string(currentHP) + " / " + to_string(hp);
 	str += "\n";
 	str += "Atk: " + to_string(atk);

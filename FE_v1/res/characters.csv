@@ -1,3 +1,8 @@
-nombre	clase	casilla_x	casilla_y	hp	atk	spd	def	res
-eirika	p	1	2	10	15	15	4	7
-eirika	p	4	4	10	8	20	4	7
+nombre;clase;casilla_x;casilla_y;hp;atk;spd;def;res
+eirika;p;0;0;10;15;15;4;7
+soldier;s;1;0;10;8;20;4;7
+jinete;j;2;0;11;2;37;8;8
+archer;a;3;2;20;10;15;10;8
+fighter;f;4;0;11;2;37;8;8
+monk;m;5;0;11;2;37;8;8
+pegasus;w;6;0;11;2;37;8;8

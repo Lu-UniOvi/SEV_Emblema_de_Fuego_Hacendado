@@ -11,7 +11,7 @@ void GameLayer::init() {
 	resultPanel = new ResultPanel(this->game);
 	
 	//Game stuff
-	this->turn = 0;
+	this->turn = 1; //CAMBIAR
 	this->paintMenu = false;
 	this->boolSeleccionaEnemigo = false;
 	this->boolResultPanel = false;
@@ -44,13 +44,15 @@ void GameLayer::update() {
 		//Aplica las posiciones finales
 		for (auto const& pair : posicionesFinalesEnemigos) {
 			mapManager->moveEnemyTo(pair.second, pair.first);
+			cout << "eres el -1?" << endl;
 			cout << pair.second[0] << endl;
 
 			if (pair.first->currentHP <= 0)
 				mapManager->deleteEnemy(pair.first);
 		}
 
-		for (auto const& character : mapManager->characters)
+		list<Character*> auxchara(mapManager->characters);
+		for (auto const& character : auxchara)
 			if (character->currentHP <= 0)
 				mapManager->deleteCharacter(character);
 	}
@@ -208,7 +210,7 @@ void GameLayer::loadCharacters(string name, bool characterList) {
 		// Por línea
 		while (getline(streamFile, line)) {
 			istringstream streamLine(line);
-			string delimiter = "\t";
+			string delimiter = ";";
 
 			size_t pos = 0;
 			string token;
@@ -313,6 +315,7 @@ CharacterClass* GameLayer::obtainCharacterClass(char classCode) {
 		break;
 	}
 	default:
+		charClass = new Princess();
 		break;
 	}
 	return charClass;
@@ -336,7 +339,6 @@ void GameLayer::notMenuClick(float motionX, float motionY) {
 	//Encuentra el tile en el que se hizo click y lo devuelve
 
 	vector<int> clickedSquare = mapManager->findClickedSquare(motionX, motionY);
-	Tile* tile = mapManager->findClickedTile(clickedSquare);
 
 	if (boolResultPanel) {
 		if (resultPanel->buttonAttack->button->containsPoint(motionX, motionY)) {

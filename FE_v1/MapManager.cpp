@@ -33,12 +33,14 @@ void MapManager::draw(float scrollX) {
 	if (pintarRango) {
 		for (auto const& v : this->range) {
 			Tile* tile = findClickedTile(v);
-			this->drawBorder(tile, blueSquare, scrollX);
+			if (tile != nullptr)
+				this->drawBorder(tile, blueSquare, scrollX);
 		}
 		if (pintarEnemyRango) {
 			for (auto const& v : this->enemyRange) {
 				Tile* tile = findClickedTile(v);
-				this->drawBorder(tile, redSquare, scrollX);
+				if (tile != nullptr)
+					this->drawBorder(tile, redSquare, scrollX);
 			}
 		}
 	}
@@ -169,7 +171,10 @@ vector<int> MapManager::findClickedSquare(float motionX, float motionY) {
 
 Tile* MapManager::findClickedTile(vector<int> positions) {
 	//cout << "findClickedTile: " << positions[1] << ", " << positions[0] << endl;
-	return mapa[positions[1]][positions[0]];
+	if (positions[1] >= 0 && positions[1] < mapa.size() && 
+		positions[0] >= 0 && positions[0] < mapa[0].size())
+		return mapa[positions[1]][positions[0]];
+	return nullptr;
 }
 
 Character* MapManager::findClickedCharacter(vector<int> positions) {
@@ -219,6 +224,7 @@ list<vector<int>> MapManager::compruebaIrAdyacentes(int x, int y, int coste, Mov
 	}
 	//Comprueba derecha
 	if (x + 1 < mapa[0].size()) {
+		//cout << "compruebaDerecha: " << to_string(x + 1) << endl;
 		Tile* t = mapa[y][x + 1];
 		vector<int> v = { x + 1, y };
 		if (mt->costeMovimiento(t) + coste < mt->movementRange
@@ -369,8 +375,10 @@ void MapManager::moveSelectedCharacterTo(vector<int> position) {
 
 		//Actualizar la posicion del character
 		Tile* tile = this->findClickedTile(position);
-		this->selectedCharacter->x = tile->x;
-		this->selectedCharacter->y = tile->y;
+		if (tile != nullptr) {
+			this->selectedCharacter->x = tile->x;
+			this->selectedCharacter->y = tile->y;
+		}
 	}
 }
 
@@ -386,8 +394,10 @@ void MapManager::moveEnemyTo(vector<int> position, Enemy* enemy) {
 
 		//Actualizar la posicion del character
 		Tile* tile = this->findClickedTile(position);
-		enemy->x = tile->x;
-		enemy->y = tile->y;
+		if (tile != nullptr) {
+			enemy->x = tile->x;
+			enemy->y = tile->y;
+		}
 	}
 }
 
@@ -423,7 +433,7 @@ bool MapManager::enemyInAttackRange() {
 			vector<int> right = selectedSquare;
 			right[0] = selectedSquare[0] + 1;
 			vector<int> bottom = selectedSquare;
-			bottom[0] = selectedSquare[1] + 1;
+			bottom[1] = selectedSquare[1] + 1;
 			vector<int> left = selectedSquare;
 			left[0] = selectedSquare[0] - 1;
 
@@ -561,7 +571,7 @@ map<Enemy*, vector<int>> MapManager::calculateEnemyFase() {
 					vector<int> right = posicionMejor;
 					right[0] = posicionMejor[0] + 1;
 					vector<int> bottom = posicionMejor;
-					bottom[0] = posicionMejor[1] + 1;
+					bottom[1] = posicionMejor[1] + 1;
 					vector<int> left = posicionMejor;
 					left[0] = posicionMejor[0] - 1;
 
@@ -609,6 +619,9 @@ map<Enemy*, vector<int>> MapManager::calculateEnemyFase() {
 					else if (topleft[0] >= 0 && topleft[1] >= 0 && isVectorInRange(movementRange, topleft))
 						posicionesFinalesEnemigos[enemy] = topleft;
 				}
+				cout << enemy->name << " attacks " << mejorChar->name << endl;
+				cout << " moves to " << to_string(posicionesFinalesEnemigos[enemy][0])
+					<< ", " << posicionesFinalesEnemigos[enemy] [1] << endl;
 				//Aplicar el ataque
 				realizaAtaque(enemy, mejorChar, mejor);
 			}
@@ -629,7 +642,32 @@ map<Enemy*, vector<int>> MapManager::calculateEnemyFase() {
 					}
 				}
 				// TODO
-				//Encontrar casilla adyacente al Character que esté en rango del enemigo
+				//Encontrar casilla dentro del rango del enemigo más cercana al player más cercano
+				map<vector<int>, int> distanciasEnemyTarget; //posicion, distancia
+				for (auto const& pos : movementRange) {
+					distanciasEnemyTarget[pos] = abs(closest[0] - pos[0])
+						+ abs(closest[1] - pos[1]);
+				}
+
+				vector<int> closestInRange = { -1, -1 };
+				int distanciaInRange = 2147483647;
+				for (auto const& pair : distanciasEnemyTarget) {
+					if (pair.second < distanciaInRange) {
+						distanciaInRange = pair.second;
+						closestInRange = pair.first;
+					}
+				}
+
+				posicionesFinalesEnemigos[enemy] = closestInRange;
+
+				enemy->canPlay = false;
+
+				cout << enemy->name << " moves" << endl;
+				cout << " moves to " << to_string(posicionesFinalesEnemigos[enemy][0])
+					<< ", " << posicionesFinalesEnemigos[enemy][1] << endl;
+
+
+				/*//Encontrar casilla adyacente al Character que esté en rango del enemigo
 				vector<int> aux = { closest[0], closest[1] - 1 }; //top
 				posicionesFinalesEnemigos[enemy] = {-1,-1};
 				if (find(movementRange.begin(), movementRange.end(), aux) != movementRange.end()) {
@@ -649,7 +687,7 @@ map<Enemy*, vector<int>> MapManager::calculateEnemyFase() {
 				if (find(movementRange.begin(), movementRange.end(), aux) != movementRange.end()
 					&& posicionesFinalesEnemigos[enemy][0] != -1) {
 					posicionesFinalesEnemigos[enemy] = aux;
-				}
+				}*/
 			}
 		}
 	}
