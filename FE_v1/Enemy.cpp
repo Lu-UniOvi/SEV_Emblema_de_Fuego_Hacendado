@@ -9,3 +9,7 @@ Enemy::Enemy(string name, int hp, int atk, int spd, int def, int res, CharacterC
 bool Enemy::isAlly() {
 	return false;
 }
+
+void Enemy::draw(float scrollX) {
+	animation->draw(x - scrollX, y);
+}

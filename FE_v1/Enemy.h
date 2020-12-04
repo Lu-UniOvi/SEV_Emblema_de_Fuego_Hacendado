@@ -9,4 +9,5 @@ public:
 
 	//Metodos
 	bool isAlly() override;
+	void draw(float scrollX) override;
 };

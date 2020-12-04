@@ -26,7 +26,7 @@ void GameLayer::init() {
 
 	//Cargar Characters
 	loadCharacters("res/characters_test.csv", true);
-	loadCharacters("res/enemies_test.csv", false);
+	loadCharacters("res/enemies.csv", false);
 }
 
 void GameLayer::update() {
@@ -45,11 +45,13 @@ void GameLayer::update() {
 		for (auto const& pair : posicionesFinalesEnemigos) {
 			mapManager->moveEnemyTo(pair.second, pair.first);
 			//cout << "eres el -1?" << endl;
-			cout << pair.first->name << ": " << pair.second[0] << ", " << pair.second[1] << endl;
+			//cout << pair.first->name << ": " << pair.second[0] << ", " << pair.second[1] << endl;
 
 			if (pair.first->currentHP <= 0)
 				mapManager->deleteEnemy(pair.first);
 		}
+
+		cout << "enemyPositions.size" << to_string(mapManager->enemyPositions.size()) << endl;
 
 		list<Character*> auxchara(mapManager->characters);
 		for (auto const& character : auxchara)
@@ -411,7 +413,7 @@ void GameLayer::mapClick(vector<int> clickedSquare) {
 		//Si tiene un enemigo en rango añade opción atacar
 		if (mapManager->enemyInAttackRange()) {
 			buttonManager->boolAttack = true;
-			cout << "enemy in attack range" << endl;
+			//cout << "enemy in attack range" << endl;
 		}
 	}
 	else {
@@ -445,6 +447,11 @@ void GameLayer::nextTurn() {
 	for (auto const& c : mapManager->enemies) {
 		c->canPlay = !b;
 	}
+
+	/*cout << "EnemyPositions" << endl;
+	for (auto const& pair : mapManager->enemyPositions) {
+		cout << pair.second->name << ": " << pair.first[0] << ", " << pair.first[1] << endl;
+	}*/
 }
 
 bool GameLayer::isPlayerFase() {
@@ -467,9 +474,9 @@ map<string, int> GameLayer::selectedCharacterAttacksEnemy(vector<int> clickedSqu
 		map<string, int> result = mapManager->selectedCharacter->checkAttack(enemy, 
 			mapManager->areSquaresAdjacent(mapManager->selectedSquare, clickedSquare));
 
-		for (auto const& pair : result) {
+		/*for (auto const& pair : result) {
 			cout << pair.first << ": " << pair.second << endl;
-		}
+		}*/
 
 		return result;
 	}

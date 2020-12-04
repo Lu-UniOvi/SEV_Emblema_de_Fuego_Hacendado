@@ -88,6 +88,7 @@ void MapManager::addEnemy(Enemy* character, int xpos, int ypos) {
 
 	vector<int> positions = { xpos, ypos };
 	enemyPositions[positions] = character;
+	//cout << character->name << ": " << positions[0] << ", " << positions[1] << endl;
 }
 
 void MapManager::deleteCharacter(Character* character) {
@@ -346,7 +347,7 @@ vector<int> MapManager::getCharacterPosition(Character* character) {
 			return pair.first;
 		}
 	}
-	return vector<int>();
+	return { -1, -1 };
 }
 
 vector<int> MapManager::getEnemyPosition(Enemy* character) {
@@ -355,7 +356,7 @@ vector<int> MapManager::getEnemyPosition(Enemy* character) {
 			return pair.first;
 		}
 	}
-	return vector<int>();
+	return {-1, -1};
 }
 
 bool MapManager::isVectorInRange(list<vector<int>> lista, vector<int> v1) {
@@ -685,6 +686,7 @@ map<Enemy*, vector<int>> MapManager::calculateEnemyFase() {
 				int distancia = 2147483647;
 				for (auto const& pair : distancias) {
 					if (pair.second < distancia
+						&& !findClickedEnemy(pair.first)
 						&& noEnemyInThatPosition(posicionesFinalesEnemigos, pair.first)) {
 						distancia = pair.second;
 						closest = pair.first;
@@ -702,6 +704,7 @@ map<Enemy*, vector<int>> MapManager::calculateEnemyFase() {
 				int distanciaInRange = 2147483647;
 				for (auto const& pair : distanciasEnemyTarget) {
 					if (pair.second < distanciaInRange
+						&& !findClickedEnemy(pair.first)
 						&& noEnemyInThatPosition(posicionesFinalesEnemigos, pair.first)) {
 						distanciaInRange = pair.second;
 						closestInRange = pair.first;

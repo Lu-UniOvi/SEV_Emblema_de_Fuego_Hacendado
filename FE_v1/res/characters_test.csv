@@ -1,2 +1,8 @@
 nombre;clase;casilla_x;casilla_y;hp;atk;spd;def;res
-pegasus;p;4;6;30;20;25;15;15
+eirika;r;0;7;30;20;25;15;15
+soldier;s;1;7;30;20;25;15;15
+knight;k;2;7;30;20;25;15;15
+archer;a;3;7;30;20;25;15;15
+fighter;f;4;7;30;20;25;15;15
+monk;m;5;7;30;20;25;15;15
+pegasus;p;6;7;30;20;25;15;15
