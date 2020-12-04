@@ -2,8 +2,10 @@
 
 // Todas las librerias de SDL y otras utilidades
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector> 
+#include <stdlib.h>
 using namespace std;
 #include <SDL.h>
 #include <SDL_image.h>
@@ -26,6 +28,7 @@ public:
 	map<string, SDL_Texture*> mapTextures; // map - cache
 
 	TTF_Font* font;
+	TTF_Font* menuFont;
 
 	SDL_Window* window; // ventana
 	SDL_Renderer* renderer; // renderizador

@@ -6,7 +6,8 @@ class MovementType {
 public:
 	MovementType(int movementRange);
 
-	virtual int costeMovimiento(Tile* tile);
+	virtual float costeMovimiento(Tile* tile);
+	virtual string toString();
 
 	int movementRange;
 };

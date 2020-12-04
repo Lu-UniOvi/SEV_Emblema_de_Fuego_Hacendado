@@ -14,17 +14,18 @@ Character::Character(string name, int hp, int atk, int spd, int def, int res, Ch
 	this->res = res;
 
 	this->currentHP = hp;
+	this->canPlay = true;
 
 	this->aIdle = new Animation("res/" + name + "_idle.png", width, height,
 		120, 40, 8, 3, true, game);
-	this->aRunningLeft = new Animation("res/" + name + "_run_left.png", width, height,
+	/*this->aRunningLeft = new Animation("res/" + name + "_run_left.png", width, height,
 		160, 40, 6, 4, true, game);
 	this->aRunningRight = new Animation("res/" + name + "_run_right.png", width, height,
 		160, 40, 6, 4, true, game);
 	this->aRunningUp = new Animation("res/" + name + "_run_up.png", width, height,
 		160, 40, 6, 4, true, game);
 	this->aRunningDown = new Animation("res/" + name + "_run_down.png", width, height,
-		160, 40, 6, 4, true, game);
+		160, 40, 6, 4, true, game);*/
 	this->animation = aIdle;
 }
 
@@ -33,5 +34,106 @@ void Character::update() {
 }
 
 void Character::draw(float scrollX) {
-	animation->draw(x - scrollX, y);
+	if (canPlay)
+		animation->draw(x - scrollX, y);
+	else
+		Actor::draw();
+}
+
+bool Character::isAlly() {
+	return true;
+}
+
+map<string, int> Character::checkAttack(Character* target, bool closeRange) {
+	int damageDealt = 0;
+	int damageTaken = 0;
+
+	map<string, int> result;
+	result["damageDealt"] = damageDealt;
+	result["damageTaken"] = damageTaken;
+
+	//this ataca primero
+	damageDealt = this->calculateDamage(target);
+	result["damageDealt"] = damageDealt;
+
+	//Comprueba si el target se murio
+	if (target->currentHP <= damageDealt) {
+		return result;
+	}
+
+	//target ataca si puede
+	if ( (closeRange && target->characterClass->weaponType->closeRange)
+		|| (!closeRange && target->characterClass->weaponType->longRange)) {
+		damageTaken = target->calculateDamage(this);
+		result["damageTaken"] = damageTaken;
+	}
+
+	//Comprueba si this se murio
+	if (this->currentHP <= damageTaken) {
+		return result;
+	}
+
+	//Se comprueba si this hace doble
+	if (this->spd - target->spd >= 5) {
+		//hace doble y vuelve a atacar
+		damageDealt += this->calculateDamage(target);
+		result["damageDealt"] = damageDealt;
+	}
+
+	//Comprueba si el target se murio
+	if (target->currentHP <= damageDealt) {
+		return result;
+	}
+
+	//Se comprueba si target hace doble
+	if (target->spd - this->spd >= 5) {
+		//hace doble y vuelve a atacar
+		if ((closeRange && target->characterClass->weaponType->closeRange)
+			|| (!closeRange && target->characterClass->weaponType->longRange)) {
+			//si puede contraatacar
+			damageTaken += target->calculateDamage(this);
+			result["damageTaken"] = damageTaken;
+		}
+	}
+
+	//Comprueba si el target se murio
+	if (this->currentHP <= damageTaken) {
+		return result;
+	}
+
+	return result;
+}
+
+int Character::calculateDamage(Character* target) {
+	if (this->characterClass->weaponType->physicalAttack) {
+		//Ataca por defensa
+		int aux = this->atk * characterClass->weaponType->
+			getBonus(target->characterClass->weaponType) - target->def;
+		return aux > 0 ? aux : 0;
+	}
+	else {
+		//Ataca por resistencia
+		int aux = this->atk * characterClass->weaponType->
+			getBonus(target->characterClass->weaponType) - target->res;
+		return aux > 0 ? aux : 0;
+	}
+}
+
+string Character::toString() {
+	string str = string();
+	
+	str += characterClass->toString();
+	str += "\n";
+	str += "HP: " + to_string(currentHP) + " / " + to_string(hp);
+	str += "\n";
+	str += "Atk: " + to_string(atk);
+	str += "\n";
+	str += "Spd: " + to_string(spd);
+	str += "\n";
+	str += "Def: " + to_string(def);
+	str += "\n";
+	str += "Res: " + to_string(res);
+	str += "\n";
+
+	return str;
 }

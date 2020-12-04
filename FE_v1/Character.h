@@ -23,12 +23,18 @@ public:
 	//Stats
 	string name;
 	int hp, atk, spd, def, res;
-	int currentHP;
 
 	//Inventario
 
+	//Variables para el juego
+	bool canPlay;
+	int currentHP;
+
 	//Metodos
 	void update();
-	void draw(float scrollX);
+	virtual void draw(float scrollX);
+	virtual bool isAlly();
+	map<string, int> checkAttack(Character* target, bool closeRange); //this inicia el ataque
+	int calculateDamage(Character* target);
+	string toString();
 };
-
