@@ -196,25 +196,26 @@ void MapManager::setRange(Character* character) {
 	vector<int> characterPosition = this->getCharacterPosition(character);
 	
 	list<vector<int>> rango = compruebaIrAdyacentes(characterPosition[0], 
-		characterPosition[1], 0, character->characterClass->movementType, list<vector<int>>());
+		characterPosition[1], 0, character->characterClass->movementType, list<vector<int>>(), character->isAlly());
 	rango = this->addToRange(rango, compruebaIrAdyacentesAbajo(characterPosition[0],
-		characterPosition[1], 0, character->characterClass->movementType, list<vector<int>>()));
+		characterPosition[1], 0, character->characterClass->movementType, list<vector<int>>(), character->isAlly()));
 
 	this->range = rango;
 	this->pintarRango = true;
 	this->selectedCharacter = character;
 }
 
-list<vector<int>> MapManager::compruebaIrAdyacentes(int x, int y, int coste, MovementType* mt, list<vector<int>> lista) {
+list<vector<int>> MapManager::compruebaIrAdyacentes(int x, int y, int coste, MovementType* mt, list<vector<int>> lista, bool isAlly) {
 	lista.push_back({x, y});
 
 	//Comprueba arriba
 	if (y - 1 >= 0) {
 		Tile* t = mapa[y - 1][x];
 		vector<int> v = { x, y - 1 };
+		bool notObstacle = isAlly ? findClickedEnemy(v) == nullptr : findClickedCharacter(v) == nullptr;
 		if (mt->costeMovimiento(t) + coste < mt->movementRange
-			&& !isVectorInRange(lista, v) && findClickedEnemy(v) == nullptr) {
-			list<vector<int>> lista2 = compruebaIrAdyacentes(x, y - 1, mt->costeMovimiento(t) + coste, mt, lista);
+			&& !isVectorInRange(lista, v) && notObstacle) {
+			list<vector<int>> lista2 = compruebaIrAdyacentes(x, y - 1, mt->costeMovimiento(t) + coste, mt, lista, isAlly);
 
 			for (auto const& a : lista2) {
 				if (find(lista.begin(), lista.end(), a) == lista.end())
@@ -227,9 +228,10 @@ list<vector<int>> MapManager::compruebaIrAdyacentes(int x, int y, int coste, Mov
 		//cout << "compruebaDerecha: " << to_string(x + 1) << endl;
 		Tile* t = mapa[y][x + 1];
 		vector<int> v = { x + 1, y };
+		bool notObstacle = isAlly ? findClickedEnemy(v) == nullptr : findClickedCharacter(v) == nullptr;
 		if (mt->costeMovimiento(t) + coste < mt->movementRange
-			&& !isVectorInRange(lista, v) && findClickedEnemy(v) == nullptr) {
-			list<vector<int>> lista2 = compruebaIrAdyacentes(x + 1, y, mt->costeMovimiento(t) + coste, mt, lista);
+			&& !isVectorInRange(lista, v) && notObstacle) {
+			list<vector<int>> lista2 = compruebaIrAdyacentes(x + 1, y, mt->costeMovimiento(t) + coste, mt, lista, isAlly);
 
 			for (auto const& a : lista2) {
 				if (find(lista.begin(), lista.end(), a) == lista.end())
@@ -241,9 +243,10 @@ list<vector<int>> MapManager::compruebaIrAdyacentes(int x, int y, int coste, Mov
 	if (x - 1 >= 0) {
 		Tile* t = mapa[y][x - 1];
 		vector<int> v = { x - 1, y };
+		bool notObstacle = isAlly ? findClickedEnemy(v) == nullptr : findClickedCharacter(v) == nullptr;
 		if (mt->costeMovimiento(t) + coste < mt->movementRange
-			&& !isVectorInRange(lista, v) && findClickedEnemy(v) == nullptr) {
-			list<vector<int>> lista2 = compruebaIrAdyacentes(x - 1, y, mt->costeMovimiento(t) + coste, mt, lista);
+			&& !isVectorInRange(lista, v) && notObstacle) {
+			list<vector<int>> lista2 = compruebaIrAdyacentes(x - 1, y, mt->costeMovimiento(t) + coste, mt, lista, isAlly);
 
 			for (auto const& a : lista2) {
 				if (find(lista.begin(), lista.end(), a) == lista.end())
@@ -255,9 +258,10 @@ list<vector<int>> MapManager::compruebaIrAdyacentes(int x, int y, int coste, Mov
 	if (y + 1 < mapa.size()) {
 		Tile* t = mapa[y + 1][x];
 		vector<int> v = { x, y + 1 };
+		bool notObstacle = isAlly ? findClickedEnemy(v) == nullptr : findClickedCharacter(v) == nullptr;
 		if (mt->costeMovimiento(t) + coste < mt->movementRange
-			&& !isVectorInRange(lista, v) && findClickedEnemy(v) == nullptr) {
-			list<vector<int>> lista2 = compruebaIrAdyacentes(x, y + 1, mt->costeMovimiento(t) + coste, mt, lista);
+			&& !isVectorInRange(lista, v) && notObstacle) {
+			list<vector<int>> lista2 = compruebaIrAdyacentes(x, y + 1, mt->costeMovimiento(t) + coste, mt, lista, isAlly);
 
 			for (auto const& a : lista2) {
 				if (find(lista.begin(), lista.end(), a) == lista.end())
@@ -269,16 +273,17 @@ list<vector<int>> MapManager::compruebaIrAdyacentes(int x, int y, int coste, Mov
 	return lista;
 }
 
-list<vector<int>> MapManager::compruebaIrAdyacentesAbajo(int x, int y, int coste, MovementType* mt, list<vector<int>> lista) {
+list<vector<int>> MapManager::compruebaIrAdyacentesAbajo(int x, int y, int coste, MovementType* mt, list<vector<int>> lista, bool isAlly) {
 	lista.push_back({ x, y });
 
 	//Comprueba abajo
 	if (y + 1 < mapa.size()) {
 		Tile* t = mapa[y + 1][x];
 		vector<int> v = { x, y + 1 };
+		bool notObstacle = isAlly ? findClickedEnemy(v) == nullptr : findClickedCharacter(v) == nullptr;
 		if (mt->costeMovimiento(t) + coste < mt->movementRange
-			&& !isVectorInRange(lista, v) && findClickedEnemy(v) == nullptr) {
-			list<vector<int>> lista2 = compruebaIrAdyacentesAbajo(x, y + 1, mt->costeMovimiento(t) + coste, mt, lista);
+			&& !isVectorInRange(lista, v) && notObstacle) {
+			list<vector<int>> lista2 = compruebaIrAdyacentesAbajo(x, y + 1, mt->costeMovimiento(t) + coste, mt, lista, isAlly);
 
 			for (auto const& a : lista2) {
 				if (find(lista.begin(), lista.end(), a) == lista.end())
@@ -290,9 +295,10 @@ list<vector<int>> MapManager::compruebaIrAdyacentesAbajo(int x, int y, int coste
 	if (x + 1 < mapa[0].size()) {
 		Tile* t = mapa[y][x + 1];
 		vector<int> v = { x + 1, y };
+		bool notObstacle = isAlly ? findClickedEnemy(v) == nullptr : findClickedCharacter(v) == nullptr;
 		if (mt->costeMovimiento(t) + coste < mt->movementRange
-			&& !isVectorInRange(lista, v) && findClickedEnemy(v) == nullptr) {
-			list<vector<int>> lista2 = compruebaIrAdyacentesAbajo(x + 1, y, mt->costeMovimiento(t) + coste, mt, lista);
+			&& !isVectorInRange(lista, v) && notObstacle) {
+			list<vector<int>> lista2 = compruebaIrAdyacentesAbajo(x + 1, y, mt->costeMovimiento(t) + coste, mt, lista, isAlly);
 
 			for (auto const& a : lista2) {
 				if (find(lista.begin(), lista.end(), a) == lista.end())
@@ -304,9 +310,10 @@ list<vector<int>> MapManager::compruebaIrAdyacentesAbajo(int x, int y, int coste
 	if (x - 1 >= 0) {
 		Tile* t = mapa[y][x - 1];
 		vector<int> v = { x - 1, y };
+		bool notObstacle = isAlly ? findClickedEnemy(v) == nullptr : findClickedCharacter(v) == nullptr;
 		if (mt->costeMovimiento(t) + coste < mt->movementRange
-			&& !isVectorInRange(lista, v) && findClickedEnemy(v) == nullptr) {
-			list<vector<int>> lista2 = compruebaIrAdyacentesAbajo(x - 1, y, mt->costeMovimiento(t) + coste, mt, lista);
+			&& !isVectorInRange(lista, v) && notObstacle) {
+			list<vector<int>> lista2 = compruebaIrAdyacentesAbajo(x - 1, y, mt->costeMovimiento(t) + coste, mt, lista, isAlly);
 
 			for (auto const& a : lista2) {
 				if (find(lista.begin(), lista.end(), a) == lista.end())
@@ -458,19 +465,19 @@ bool MapManager::enemyInAttackRange() {
 		if (selectedCharacter->characterClass->weaponType->longRange) {
 			//Comprueba casillas a una casilla de distancia, contando diagonales
 			vector<int> top = selectedSquare;
-			top[1] = selectedSquare[1] - 1;
+			top[1] = selectedSquare[1] - 2;
 			vector<int> topright = top;
 			topright[0] = selectedSquare[0] + 1;
 			vector<int> right = selectedSquare;
-			right[0] = selectedSquare[0] + 1;
+			right[0] = selectedSquare[0] + 2;
 			vector<int> bottomright = right;
 			bottomright[1] = selectedSquare[1] + 1;
 			vector<int> bottom = selectedSquare;
-			bottom[1] = selectedSquare[1] + 1;
+			bottom[1] = selectedSquare[1] + 2;
 			vector<int> bottomleft = bottom;
 			bottomleft[0] = selectedSquare[0] - 1;
 			vector<int> left = selectedSquare;
-			left[0] = selectedSquare[0] - 1;
+			left[0] = selectedSquare[0] - 2;
 			vector<int> topleft = top;
 			topleft[0] = selectedSquare[0] - 1;
 
@@ -522,22 +529,24 @@ map<Enemy*, vector<int>> MapManager::calculateEnemyFase() {
 			vector<int> enemyPosition = this->getEnemyPosition(enemy);
 
 			list<vector<int>> movementRange = compruebaIrAdyacentes(enemyPosition[0],
-				enemyPosition[1], 0, enemy->characterClass->movementType, list<vector<int>>());
+				enemyPosition[1], 0, enemy->characterClass->movementType, list<vector<int>>(), enemy->isAlly());
 			movementRange = this->addToRange(movementRange, compruebaIrAdyacentesAbajo(enemyPosition[0],
-				enemyPosition[1], 0, enemy->characterClass->movementType, list<vector<int>>()));
+				enemyPosition[1], 0, enemy->characterClass->movementType, list<vector<int>>(), enemy->isAlly()));
 
 			// TODO
 			//De momento hagamos como que los enemigos solo pueden atacar a casillas que pueden moverse.
 			/*enemy->characterClass->movementType->movementRange +=
 				enemy->characterClass->weaponType->longRange ? 2 : 1;*/
 
+			list<vector<int>> attackRange = calculateAttackRange(enemy, movementRange);
+
 			//Puedo o hacer lo mismo aumentando el movement range y volviendolo a poner como estaba despues de conseguir el rango
 			//O me curro otro metodo
 			//O paso de todo y los enemigos son inferiores porque anime powers
 
-			//Obtener los personajes que se encuentran en ese rango
+			//Obtener los personajes que se pueden atacar
 			map<Character*, vector<int>> charactersInRange;
-			for (auto const& pos : movementRange) {
+			for (auto const& pos : attackRange) {
 				Character* chara = findClickedCharacter(pos);
 				if (chara != nullptr)
 					charactersInRange[chara] = pos;
@@ -547,7 +556,21 @@ map<Enemy*, vector<int>> MapManager::calculateEnemyFase() {
 				//Calcular el resultado de atacar a los personajes en rango
 				map<Character*, map<string, int>> resultados;
 				for (auto const& pair : charactersInRange) {
-					resultados[pair.first] = enemy->checkAttack(pair.first);
+					bool enemyCloseAttackRange = enemy->characterClass->weaponType->closeRange;
+
+					//Si el enemigo puede atacar a closeRange y el character no puede contraatacar
+					//y el enemy puede estar en una casilla adyacente
+					if (enemy->characterClass->weaponType->closeRange &&
+						!pair.first->characterClass->weaponType->closeRange)
+						enemyCloseAttackRange = true;
+					//Si el enemigo puede atacar a longRange y el character no puede contraatacar
+					//y el enemy puede estar en una casilla a distancia
+					if (enemy->characterClass->weaponType->longRange &&
+						!pair.first->characterClass->weaponType->longRange)
+						enemyCloseAttackRange = false;
+
+					resultados[pair.first] = enemy->checkAttack(pair.first,
+						enemyCloseAttackRange);
 				}
 				//Escoger el mejor resultado
 				map<string, int> mejor;
@@ -575,13 +598,21 @@ map<Enemy*, vector<int>> MapManager::calculateEnemyFase() {
 					vector<int> left = posicionMejor;
 					left[0] = posicionMejor[0] - 1;
 
-					if (top[1] >= 0 && isVectorInRange(movementRange, top))
+					if (top[1] >= 0 && isVectorInRange(movementRange, top)
+						&& !isEnemyInPosition(top)
+						&& noEnemyInThatPosition(posicionesFinalesEnemigos, top))
 						posicionesFinalesEnemigos[enemy] = top;
-					else if (right[0] < mapa[0].size() && isVectorInRange(movementRange, right))
+					else if (right[0] < mapa[0].size() && isVectorInRange(movementRange, right)
+						&& !isEnemyInPosition(right)
+						&& noEnemyInThatPosition(posicionesFinalesEnemigos, right))
 						posicionesFinalesEnemigos[enemy] = right;
-					else if (bottom[1] < mapa.size() && isVectorInRange(movementRange, bottom))
+					else if (bottom[1] < mapa.size() && isVectorInRange(movementRange, bottom)
+						&& !isEnemyInPosition(bottom)
+						&& noEnemyInThatPosition(posicionesFinalesEnemigos, bottom))
 						posicionesFinalesEnemigos[enemy] = bottom;
-					else if (left[0] >= 0 && isVectorInRange(movementRange, left))
+					else if (left[0] >= 0 && isVectorInRange(movementRange, left)
+						&& !isEnemyInPosition(left)
+						&& noEnemyInThatPosition(posicionesFinalesEnemigos, left))
 						posicionesFinalesEnemigos[enemy] = left;
 				}
 				if (enemy->characterClass->weaponType->longRange) {
@@ -602,26 +633,43 @@ map<Enemy*, vector<int>> MapManager::calculateEnemyFase() {
 					vector<int> topleft = top;
 					topleft[0] = posicionMejor[0] - 1;
 
-					if (top[1] >= 0 && isVectorInRange(movementRange, top))
+					if (top[1] >= 0 && isVectorInRange(movementRange, top)
+						&& !isEnemyInPosition(top)
+						&& noEnemyInThatPosition(posicionesFinalesEnemigos, top))
 						posicionesFinalesEnemigos[enemy] = top;
-					else if (topright[0] < mapa[0].size() && topright[1] >= 0 && isVectorInRange(movementRange, topright))
+					else if (topright[0] < mapa[0].size() && topright[1] >= 0 && isVectorInRange(movementRange, topright)
+						&& !isEnemyInPosition(topright)
+						&& noEnemyInThatPosition(posicionesFinalesEnemigos, topright))
 						posicionesFinalesEnemigos[enemy] = topright;
-					else if (right[0] < mapa[0].size() && isVectorInRange(movementRange, right))
+					else if (right[0] < mapa[0].size() && isVectorInRange(movementRange, right)
+						&& !isEnemyInPosition(right)
+						&& noEnemyInThatPosition(posicionesFinalesEnemigos, right))
 						posicionesFinalesEnemigos[enemy] = right;
-					else if (bottomright[0] < mapa[0].size() && bottomright[1] < mapa.size() && isVectorInRange(movementRange, bottomright))
+					else if (bottomright[0] < mapa[0].size() && bottomright[1] < mapa.size() 
+						&& isVectorInRange(movementRange, bottomright)
+						&& !isEnemyInPosition(bottomright)
+						&& noEnemyInThatPosition(posicionesFinalesEnemigos, bottomright))
 						posicionesFinalesEnemigos[enemy] = bottomright;
-					else if (bottom[1] < mapa.size() && isVectorInRange(movementRange, bottom))
+					else if (bottom[1] < mapa.size() && isVectorInRange(movementRange, bottom)
+						&& !isEnemyInPosition(bottom)
+						&& noEnemyInThatPosition(posicionesFinalesEnemigos, bottom))
 						posicionesFinalesEnemigos[enemy] = bottom;
-					else if (bottomleft[0] >= 0 && bottomleft[1] < mapa.size() && isVectorInRange(movementRange, bottomleft))
+					else if (bottomleft[0] >= 0 && bottomleft[1] < mapa.size() && isVectorInRange(movementRange, bottomleft)
+						&& !isEnemyInPosition(bottomleft)
+						&& noEnemyInThatPosition(posicionesFinalesEnemigos, bottomleft))
 						posicionesFinalesEnemigos[enemy] = bottomleft;
-					else if (left[0] >= 0 && isVectorInRange(movementRange, left))
+					else if (left[0] >= 0 && isVectorInRange(movementRange, left)
+						&& !isEnemyInPosition(left)
+						&& noEnemyInThatPosition(posicionesFinalesEnemigos, left))
 						posicionesFinalesEnemigos[enemy] = left;
-					else if (topleft[0] >= 0 && topleft[1] >= 0 && isVectorInRange(movementRange, topleft))
+					else if (topleft[0] >= 0 && topleft[1] >= 0 && isVectorInRange(movementRange, topleft)
+						&& !isEnemyInPosition(topleft)
+						&& noEnemyInThatPosition(posicionesFinalesEnemigos, topleft))
 						posicionesFinalesEnemigos[enemy] = topleft;
 				}
-				cout << enemy->name << " attacks " << mejorChar->name << endl;
+				/*cout << enemy->name << " attacks " << mejorChar->name << endl;
 				cout << " moves to " << to_string(posicionesFinalesEnemigos[enemy][0])
-					<< ", " << posicionesFinalesEnemigos[enemy] [1] << endl;
+					<< ", " << posicionesFinalesEnemigos[enemy] [1] << endl;*/
 				//Aplicar el ataque
 				realizaAtaque(enemy, mejorChar, mejor);
 			}
@@ -636,7 +684,8 @@ map<Enemy*, vector<int>> MapManager::calculateEnemyFase() {
 				vector<int> closest = {-1, -1};
 				int distancia = 2147483647;
 				for (auto const& pair : distancias) {
-					if (pair.second < distancia) {
+					if (pair.second < distancia
+						&& noEnemyInThatPosition(posicionesFinalesEnemigos, pair.first)) {
 						distancia = pair.second;
 						closest = pair.first;
 					}
@@ -652,7 +701,8 @@ map<Enemy*, vector<int>> MapManager::calculateEnemyFase() {
 				vector<int> closestInRange = { -1, -1 };
 				int distanciaInRange = 2147483647;
 				for (auto const& pair : distanciasEnemyTarget) {
-					if (pair.second < distanciaInRange) {
+					if (pair.second < distanciaInRange
+						&& noEnemyInThatPosition(posicionesFinalesEnemigos, pair.first)) {
 						distanciaInRange = pair.second;
 						closestInRange = pair.first;
 					}
@@ -662,9 +712,9 @@ map<Enemy*, vector<int>> MapManager::calculateEnemyFase() {
 
 				enemy->canPlay = false;
 
-				cout << enemy->name << " moves" << endl;
+				/*cout << enemy->name << " moves" << endl;
 				cout << " moves to " << to_string(posicionesFinalesEnemigos[enemy][0])
-					<< ", " << posicionesFinalesEnemigos[enemy][1] << endl;
+					<< ", " << posicionesFinalesEnemigos[enemy][1] << endl;*/
 
 
 				/*//Encontrar casilla adyacente al Character que esté en rango del enemigo
@@ -704,4 +754,107 @@ void MapManager::realizaAtaque(Character* player, Character* target, map<string,
 		target->currentHP - result["damageDealt"] : 0;
 
 	player->canPlay = false;
+}
+
+bool MapManager::areSquaresAdjacent(vector<int> pos1, vector<int> pos2) {
+	bool adjacent = false;
+
+	if (pos1[0] == pos2[0] && pos1[1] + 1 == pos2[1])
+		adjacent = true;
+	if (pos1[0] == pos2[0] && pos1[1] - 1 == pos2[1])
+		adjacent = true;
+	if (pos1[0] + 1 == pos2[0] && pos1[1] == pos2[1])
+		adjacent = true;
+	if (pos1[0] - 1 == pos2[0] && pos1[1] == pos2[1])
+		adjacent = true;
+
+	return adjacent;
+}
+
+list<vector<int>> MapManager::calculateAttackRange(Enemy* enemy, list<vector<int>> movementRange) {
+	list<vector<int>> attackRange(movementRange);
+
+	for (auto const& pos : movementRange) {
+		//CloseRange
+		if (enemy->characterClass->weaponType->closeRange) {
+			//Comprueba casillas adyacentes
+			vector<int> top = pos;
+			top[1] = pos[1] - 1;
+			vector<int> right = pos;
+			right[0] = pos[0] + 1;
+			vector<int> bottom = pos;
+			bottom[1] = pos[1] + 1;
+			vector<int> left = pos;
+			left[0] = pos[0] - 1;
+
+			if (!isVectorInRange(attackRange, top)) {
+				attackRange.push_back(top);
+			}
+			if (!isVectorInRange(attackRange, bottom)) {
+				attackRange.push_back(bottom);
+			}
+			if (!isVectorInRange(attackRange, left)) {
+				attackRange.push_back(left);
+			}
+			if (!isVectorInRange(attackRange, right)) {
+				attackRange.push_back(right);
+			}
+		}
+		//LongRange
+		if (enemy->characterClass->weaponType->longRange) {
+			//Comprueba casillas a una casilla de distancia, contando diagonales
+			vector<int> top = pos;
+			top[1] = pos[1] - 2;
+			vector<int> topright = top;
+			topright[0] = pos[0] + 1;
+			vector<int> right = pos;
+			right[0] = pos[0] + 2;
+			vector<int> bottomright = right;
+			bottomright[1] = pos[1] + 1;
+			vector<int> bottom = pos;
+			bottom[1] = pos[1] + 2;
+			vector<int> bottomleft = bottom;
+			bottomleft[0] = pos[0] - 1;
+			vector<int> left = pos;
+			left[0] = pos[0] - 2;
+			vector<int> topleft = top;
+			topleft[0] = pos[0] - 1;
+
+			if (!isVectorInRange(attackRange, top)) {
+				attackRange.push_back(top);
+			}
+			else if (!isVectorInRange(attackRange, topright)) {
+				attackRange.push_back(topright);
+			}
+			else if (!isVectorInRange(attackRange, right)) {
+				attackRange.push_back(right);
+			}
+			else if (!isVectorInRange(attackRange, bottomright)) {
+				attackRange.push_back(bottomright);
+			}
+			else if (!isVectorInRange(attackRange, bottom)) {
+				attackRange.push_back(bottom);
+			}
+			else if (!isVectorInRange(attackRange, bottomleft)) {
+				attackRange.push_back(bottomleft);
+			}
+			else if (!isVectorInRange(attackRange, left)) {
+				attackRange.push_back(left);
+			}
+			else if (!isVectorInRange(attackRange, topleft)) {
+				attackRange.push_back(topleft);
+			}
+		}
+	}
+
+	return attackRange;
+}
+
+bool MapManager::noEnemyInThatPosition(map<Enemy*, vector<int>> mapEnemies, vector<int> pos) {
+	for (auto const& pair : mapEnemies) {
+		if (pair.second[0] == pos[0] && pair.second[1] == pos[1])
+			return false;
+	}
+
+	return true;
 }

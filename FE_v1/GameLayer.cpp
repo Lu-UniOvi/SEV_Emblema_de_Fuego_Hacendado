@@ -11,7 +11,7 @@ void GameLayer::init() {
 	resultPanel = new ResultPanel(this->game);
 	
 	//Game stuff
-	this->turn = 1; //CAMBIAR
+	this->turn = 0;
 	this->paintMenu = false;
 	this->boolSeleccionaEnemigo = false;
 	this->boolResultPanel = false;
@@ -25,8 +25,8 @@ void GameLayer::init() {
 	loadMap("res/mapa_0.txt");
 
 	//Cargar Characters
-	loadCharacters("res/characters.csv", true);
-	loadCharacters("res/enemies.csv", false);
+	loadCharacters("res/characters_test.csv", true);
+	loadCharacters("res/enemies_test.csv", false);
 }
 
 void GameLayer::update() {
@@ -44,8 +44,8 @@ void GameLayer::update() {
 		//Aplica las posiciones finales
 		for (auto const& pair : posicionesFinalesEnemigos) {
 			mapManager->moveEnemyTo(pair.second, pair.first);
-			cout << "eres el -1?" << endl;
-			cout << pair.second[0] << endl;
+			//cout << "eres el -1?" << endl;
+			cout << pair.first->name << ": " << pair.second[0] << ", " << pair.second[1] << endl;
 
 			if (pair.first->currentHP <= 0)
 				mapManager->deleteEnemy(pair.first);
@@ -296,6 +296,7 @@ void GameLayer::loadEnemyObject(vector<string> data) {
 
 	Enemy* character = new Enemy(name, hp, atk, spd, def, res, characterClass,
 		x, y, 40, 40, this->game);
+	character->canPlay = false;
 
 	//Añadir el objeto al mapa
 	mapManager->addEnemy(character, casilla_x, casilla_y);
@@ -463,7 +464,8 @@ void GameLayer::moveCharacter(vector<int> clickedSquare) {
 map<string, int> GameLayer::selectedCharacterAttacksEnemy(vector<int> clickedSquare) {
 	Enemy* enemy = mapManager->findClickedEnemy(clickedSquare);
 	if (enemy != nullptr) {
-		map<string, int> result = mapManager->selectedCharacter->checkAttack(enemy);
+		map<string, int> result = mapManager->selectedCharacter->checkAttack(enemy, 
+			mapManager->areSquaresAdjacent(mapManager->selectedSquare, clickedSquare));
 
 		for (auto const& pair : result) {
 			cout << pair.first << ": " << pair.second << endl;

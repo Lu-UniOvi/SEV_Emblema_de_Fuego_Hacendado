@@ -32,8 +32,8 @@ public:
 	Enemy* findClickedEnemy(vector<int> positions);
 
 	void setRange(Character* character);
-	list<vector<int>> compruebaIrAdyacentes(int x, int y, int coste, MovementType* mt, list<vector<int>> lista);
-	list<vector<int>> compruebaIrAdyacentesAbajo(int x, int y, int coste, MovementType* mt, list<vector<int>> lista);
+	list<vector<int>> compruebaIrAdyacentes(int x, int y, int coste, MovementType* mt, list<vector<int>> lista, bool isAlly);
+	list<vector<int>> compruebaIrAdyacentesAbajo(int x, int y, int coste, MovementType* mt, list<vector<int>> lista, bool isAlly);
 	list<vector<int>> addToRange(list<vector<int>> lista, list<vector<int>> lista2);
 	void deselectRange();
 
@@ -51,6 +51,11 @@ public:
 
 	map<Enemy*, vector<int>> calculateEnemyFase();
 	void realizaAtaque(Character* player, Character* target, map<string, int> result);
+
+	bool areSquaresAdjacent(vector<int> pos1, vector<int> pos2);
+
+	list<vector<int>> calculateAttackRange(Enemy* enemy, list<vector<int>> movementRange);
+	bool noEnemyInThatPosition(map<Enemy*, vector<int>> mapEnemies, vector<int> pos);
 
 	Game* game;
 	int numberOfColumns;

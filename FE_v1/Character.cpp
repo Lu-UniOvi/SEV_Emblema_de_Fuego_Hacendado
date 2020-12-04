@@ -44,7 +44,7 @@ bool Character::isAlly() {
 	return true;
 }
 
-map<string, int> Character::checkAttack(Character* target) {
+map<string, int> Character::checkAttack(Character* target, bool closeRange) {
 	int damageDealt = 0;
 	int damageTaken = 0;
 
@@ -62,7 +62,8 @@ map<string, int> Character::checkAttack(Character* target) {
 	}
 
 	//target ataca si puede
-	if (true) { //se comprobaría el rango del ataque
+	if ( (closeRange && target->characterClass->weaponType->closeRange)
+		|| (!closeRange && target->characterClass->weaponType->longRange)) {
 		damageTaken = target->calculateDamage(this);
 		result["damageTaken"] = damageTaken;
 	}
@@ -87,8 +88,12 @@ map<string, int> Character::checkAttack(Character* target) {
 	//Se comprueba si target hace doble
 	if (target->spd - this->spd >= 5) {
 		//hace doble y vuelve a atacar
-		damageTaken += target->calculateDamage(this);
-		result["damageTaken"] = damageTaken;
+		if ((closeRange && target->characterClass->weaponType->closeRange)
+			|| (!closeRange && target->characterClass->weaponType->longRange)) {
+			//si puede contraatacar
+			damageTaken += target->calculateDamage(this);
+			result["damageTaken"] = damageTaken;
+		}
 	}
 
 	//Comprueba si el target se murio
