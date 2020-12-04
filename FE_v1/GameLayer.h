@@ -12,6 +12,11 @@
 #include "CharacterClass.h"
 #include "Princess.h"
 #include "Soldier.h"
+#include "Knight.h"
+#include "Archer.h"
+#include "Fighter.h"
+#include "Monk.h"
+#include "Pegasus.h"
 
 #include "MapManager.h"
 

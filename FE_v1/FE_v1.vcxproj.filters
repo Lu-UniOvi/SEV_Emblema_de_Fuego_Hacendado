@@ -135,6 +135,36 @@
     <ClInclude Include="DescriptionPanel.h">
       <Filter>Archivos de encabezado\Actor</Filter>
     </ClInclude>
+    <ClInclude Include="Knight.h">
+      <Filter>Archivos de encabezado\CharacterClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Horse.h">
+      <Filter>Archivos de encabezado\MovementTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Bow.h">
+      <Filter>Archivos de encabezado\WeaponTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Archer.h">
+      <Filter>Archivos de encabezado\CharacterClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Fighter.h">
+      <Filter>Archivos de encabezado\CharacterClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Axe.h">
+      <Filter>Archivos de encabezado\WeaponTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Monk.h">
+      <Filter>Archivos de encabezado\CharacterClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Tome.h">
+      <Filter>Archivos de encabezado\WeaponTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Pegasus.h">
+      <Filter>Archivos de encabezado\CharacterClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Flying.h">
+      <Filter>Archivos de encabezado\MovementTypes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -217,6 +247,36 @@
     </ClCompile>
     <ClCompile Include="DescriptionPanel.cpp">
       <Filter>Archivos de origen\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Knight.cpp">
+      <Filter>Archivos de origen\CharacterClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Horse.cpp">
+      <Filter>Archivos de origen\MovementTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="Archer.cpp">
+      <Filter>Archivos de origen\CharacterClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Bow.cpp">
+      <Filter>Archivos de origen\WeaponTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="Fighter.cpp">
+      <Filter>Archivos de origen\CharacterClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Axe.cpp">
+      <Filter>Archivos de origen\WeaponTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="Monk.cpp">
+      <Filter>Archivos de origen\CharacterClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Tome.cpp">
+      <Filter>Archivos de origen\WeaponTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="Pegasus.cpp">
+      <Filter>Archivos de origen\CharacterClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Flying.cpp">
+      <Filter>Archivos de origen\MovementTypes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

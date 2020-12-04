@@ -3,7 +3,7 @@
 #include "Game.h"
 
 enum class WeaponTypeId {
-	SWORD, LANCE, AXE, TOME
+	SWORD, LANCE, AXE, TOME, BOW
 };
 
 class WeaponType {

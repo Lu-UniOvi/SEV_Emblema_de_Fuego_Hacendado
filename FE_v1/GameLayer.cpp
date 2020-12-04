@@ -304,14 +304,32 @@ void GameLayer::loadEnemyObject(vector<string> data) {
 CharacterClass* GameLayer::obtainCharacterClass(char classCode) {
 	CharacterClass* charClass = nullptr;
 	switch (classCode) {
-	case 'p': {
-		//cout << "Princess" << endl;
+	case 'r': {
 		charClass = new Princess();
 		break;
 	}
 	case 's': {
-		//cout << "Princess" << endl;
 		charClass = new Soldier();
+		break;
+	}
+	case 'k': {
+		charClass = new Knight();
+		break;
+	}
+	case 'a': {
+		charClass = new Archer();
+		break;
+	}
+	case 'f': {
+		charClass = new Fighter();
+		break;
+	}
+	case 'm': {
+		charClass = new Monk();
+		break;
+	}
+	case 'p': {
+		charClass = new Pegasus();
 		break;
 	}
 	default:
