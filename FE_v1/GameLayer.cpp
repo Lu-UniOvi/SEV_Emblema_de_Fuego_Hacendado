@@ -9,6 +9,11 @@ void GameLayer::init() {
 	mapManager = new MapManager(this->game);
 	buttonManager = new ButtonManager(this, this->game);
 	resultPanel = new ResultPanel(this->game);
+
+	if (audioBackground != nullptr)
+		audioBackground->~Audio();
+	audioBackground = new Audio("res/Fire Emblem The Sacred Stones OST - Main Theme.mp3", true);
+	audioBackground->play();
 	
 	//Game stuff
 	this->turn = 0;

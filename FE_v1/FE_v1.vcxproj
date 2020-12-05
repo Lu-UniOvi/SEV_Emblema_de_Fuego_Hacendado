@@ -154,6 +154,7 @@
     <ClInclude Include="Actor.h" />
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Archer.h" />
+    <ClInclude Include="Audio.h" />
     <ClInclude Include="Axe.h" />
     <ClInclude Include="Background.h" />
     <ClInclude Include="Bow.h" />
@@ -194,6 +195,7 @@
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Archer.cpp" />
+    <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Axe.cpp" />
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Bow.cpp" />

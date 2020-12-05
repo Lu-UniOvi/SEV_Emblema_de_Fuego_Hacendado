@@ -27,6 +27,8 @@
 #include "ResultPanel.h"
 #include "DescriptionPanel.h"
 
+#include "Audio.h"
+
 #include <fstream>
 #include <sstream>
 #include <list>
@@ -81,4 +83,6 @@ public:
 	ButtonManagerParent* buttonManager;
 	ResultPanel* resultPanel;
 	DescriptionPanel* descriptionPanel;
+
+	Audio* audioBackground;
 };

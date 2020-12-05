@@ -171,6 +171,9 @@
     <ClInclude Include="Background.h">
       <Filter>Archivos de encabezado\Actor</Filter>
     </ClInclude>
+    <ClInclude Include="Audio.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -289,6 +292,9 @@
     </ClCompile>
     <ClCompile Include="Background.cpp">
       <Filter>Archivos de origen\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
