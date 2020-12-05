@@ -5,8 +5,7 @@
 #include "Text.h"
 #include "Background.h"
 
-class MenuLayer : public Layer
-{
+class MenuLayer : public Layer {
 public:
 	MenuLayer(Game* game);
 	void init() override;
@@ -14,8 +13,8 @@ public:
 	void processControls() override;
 	void keysToControls(SDL_Event event);
 	void mouseToControls(SDL_Event event);
-	bool controlContinue = false;
 
+	bool controlContinue = false;
 	Background* background;
 	Button* button;
 	Text* text;

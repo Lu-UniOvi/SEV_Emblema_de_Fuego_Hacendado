@@ -84,5 +84,8 @@ public:
 	ResultPanel* resultPanel;
 	DescriptionPanel* descriptionPanel;
 
+	Actor* panelFin;
+	Text* textFin;
+
 	Audio* audioBackground;
 };

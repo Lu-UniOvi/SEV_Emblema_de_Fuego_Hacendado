@@ -1,5 +1,6 @@
 #include "GameLayer.h"
 #include "ButtonManager.h"
+#include "MenuLayer.h"
 
 GameLayer::GameLayer(Game* game) : Layer(game) {
 	init();
@@ -62,6 +63,39 @@ void GameLayer::update() {
 		for (auto const& character : auxchara)
 			if (character->currentHP <= 0)
 				mapManager->deleteCharacter(character);
+	}
+
+	if (mapManager->enemies.size() == 0) {
+		panelFin = new Actor("res/base_button.png", WIDTH * .5, HEIGHT * .5, 400, 200, game);
+		textFin = new Text("a\nb", WIDTH * .5, HEIGHT * .5, game->menuFont, 350, game);
+		textFin->content = "¡Has ganado!\nVolverás a la pantalla de inicio en 10 segundos.";
+		cout << textFin->content << endl;
+
+		panelFin->draw();
+		textFin->draw();
+		SDL_RenderPresent(game->renderer);
+
+		Sleep(10000);
+
+		this->init();
+		game->layer = game->menuLayer;
+		return;
+	}
+	if (mapManager->characters.size() == 0) {
+		panelFin = new Actor("res/base_button.png", WIDTH * .5, HEIGHT * .5, 400, 200, game);
+		textFin = new Text("a\nb", WIDTH * .5, HEIGHT * .5, game->menuFont, 350, game);
+		textFin->content = "Tu ejercito ha sido derrotado.\nVolverás a la pantalla de inicio en 10 segundos.";
+		cout << textFin->content << endl;
+
+		panelFin->draw();
+		textFin->draw();
+		SDL_RenderPresent(game->renderer);
+
+		Sleep(10000);
+
+		this->init();
+		game->layer = game->menuLayer;
+		return;
 	}
 }
 

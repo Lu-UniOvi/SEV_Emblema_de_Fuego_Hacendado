@@ -11,6 +11,7 @@ using namespace std;
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <map> 
+#include <windows.h>
 
 #include "Layer.h"
 class Layer;
