@@ -618,19 +618,19 @@ map<Enemy*, vector<int>> MapManager::calculateEnemyFase() {
 				}
 				if (enemy->characterClass->weaponType->longRange) {
 					vector<int> top = posicionMejor;
-					top[1] = posicionMejor[1] - 1;
+					top[1] = posicionMejor[1] - 2;
 					vector<int> topright = top;
 					topright[0] = posicionMejor[0] + 1;
 					vector<int> right = posicionMejor;
-					right[0] = posicionMejor[0] + 1;
+					right[0] = posicionMejor[0] + 2;
 					vector<int> bottomright = right;
 					bottomright[1] = posicionMejor[1] + 1;
 					vector<int> bottom = posicionMejor;
-					bottom[1] = posicionMejor[1] + 1;
+					bottom[1] = posicionMejor[1] + 2;
 					vector<int> bottomleft = bottom;
 					bottomleft[0] = posicionMejor[0] - 1;
 					vector<int> left = posicionMejor;
-					left[0] = posicionMejor[0] - 1;
+					left[0] = posicionMejor[0] - 2;
 					vector<int> topleft = top;
 					topleft[0] = posicionMejor[0] - 1;
 
