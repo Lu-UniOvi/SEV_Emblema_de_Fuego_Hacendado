@@ -29,11 +29,13 @@ public:
 
 	TTF_Font* font;
 	TTF_Font* menuFont;
+	TTF_Font* iniFont;
 
 	SDL_Window* window; // ventana
 	SDL_Renderer* renderer; // renderizador
 	bool loopActive; // Juego activo
 
 	Layer* gameLayer;
+	Layer* menuLayer;
 	Layer* layer;
 };

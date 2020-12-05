@@ -165,6 +165,12 @@
     <ClInclude Include="Flying.h">
       <Filter>Archivos de encabezado\MovementTypes</Filter>
     </ClInclude>
+    <ClInclude Include="MenuLayer.h">
+      <Filter>Archivos de encabezado\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="Background.h">
+      <Filter>Archivos de encabezado\Actor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -277,6 +283,12 @@
     </ClCompile>
     <ClCompile Include="Flying.cpp">
       <Filter>Archivos de origen\MovementTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuLayer.cpp">
+      <Filter>Archivos de origen\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="Background.cpp">
+      <Filter>Archivos de origen\Actor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

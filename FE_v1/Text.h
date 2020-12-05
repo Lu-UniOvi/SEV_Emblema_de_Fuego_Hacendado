@@ -4,7 +4,7 @@
 
 class Text {
 public:
-	Text(string content, float x, float y, bool menuFont, int wrapLength, Game* game);
+	Text(string content, float x, float y, TTF_Font* font, int wrapLength, Game* game);
 	void draw();
 	string content; // texto
 	int x;
@@ -12,6 +12,6 @@ public:
 	int width;
 	int height;
 	Game* game; // referencia al juego
-	bool menuFont;
+	TTF_Font* font;
 	int wrapLength;
 };

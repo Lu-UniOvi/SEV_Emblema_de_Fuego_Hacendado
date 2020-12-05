@@ -155,6 +155,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Archer.h" />
     <ClInclude Include="Axe.h" />
+    <ClInclude Include="Background.h" />
     <ClInclude Include="Bow.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="ButtonManager.h" />
@@ -175,6 +176,7 @@
     <ClInclude Include="Lance.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="MapManager.h" />
+    <ClInclude Include="MenuLayer.h" />
     <ClInclude Include="Monk.h" />
     <ClInclude Include="MountainTile.h" />
     <ClInclude Include="MovementType.h" />
@@ -193,6 +195,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Archer.cpp" />
     <ClCompile Include="Axe.cpp" />
+    <ClCompile Include="Background.cpp" />
     <ClCompile Include="Bow.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ButtonManager.cpp" />
@@ -214,6 +217,7 @@
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MapManager.cpp" />
+    <ClCompile Include="MenuLayer.cpp" />
     <ClCompile Include="Monk.cpp" />
     <ClCompile Include="MountainTile.cpp" />
     <ClCompile Include="MovementType.cpp" />

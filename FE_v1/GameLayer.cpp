@@ -18,14 +18,14 @@ void GameLayer::init() {
 	this->boolDescriptionPanel = false;
 
 	//Load HUD
-	this->textTurn = new Text("hola", WIDTH * 0.13, HEIGHT * 0.05, false, 350, game);
+	this->textTurn = new Text("hola", WIDTH * 0.13, HEIGHT * 0.05, game->font, 350, game);
 	this->nextTurn();
 	this->descriptionPanel = new DescriptionPanel(this->game);
 
 	loadMap("res/mapa_0.txt");
 
 	//Cargar Characters
-	loadCharacters("res/characters_test.csv", true);
+	loadCharacters("res/characters.csv", true);
 	loadCharacters("res/enemies.csv", false);
 }
 

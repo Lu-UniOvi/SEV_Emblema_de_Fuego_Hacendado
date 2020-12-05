@@ -1,11 +1,11 @@
 #include "Text.h"
 
-Text::Text(string content, float x, float y, bool menuFont, int wrapLength, Game* game) {
+Text::Text(string content, float x, float y, TTF_Font* font, int wrapLength, Game* game) {
 	this->content = content;
 	this->x = x;
 	this->y = y;
 	this->game = game;
-	this->menuFont = menuFont;
+	this->font = font;
 	this->wrapLength = wrapLength;
 }
 
@@ -16,7 +16,7 @@ void Text::draw() {
 	color.b = 0;
 	color.a = 255; //transparente
 
-	TTF_Font* font = menuFont ? game->menuFont : game->font;
+	TTF_Font* font = this->font;
 
 	SDL_Surface* surface = TTF_RenderText_Blended_Wrapped(font, content.c_str(), color, wrapLength);
 	// c_str() transforma el string a cost *char;
